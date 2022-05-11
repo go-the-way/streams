@@ -9,8 +9,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package reduces
+package streams
 
-var (
-	Slice = func(e []any, sum *[]any) { *sum = append(*sum, e...) }
-)
+// Each function
+//
+// E: element type
+//
+// eachFunc: the each function
+func Each[E any](eachFunc func(e E), es ...E) {
+	for _, e := range es {
+		eachFunc(e)
+	}
+}
+
+func EachPtr[E any](eachFunc func(e *E), es ...E) {
+	for i := range es {
+		eachFunc(&es[i])
+	}
+}
