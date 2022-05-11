@@ -18,7 +18,7 @@ import (
 
 func TestGenerate(t *testing.T) {
 	except := []int{2, 4, 6, 8}
-	es := Generate[int](1, 4, func(index, step int) int { return step * 2 })
+	es := Generate(1, 4, func(index, step int) int { return step * 2 })
 	if !reflect.DeepEqual(except, es) {
 		t.Error("test failed")
 	}

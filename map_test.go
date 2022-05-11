@@ -20,7 +20,7 @@ import (
 func TestMap(t *testing.T) {
 	arr := []int{1, 2, 3}
 	except := []string{"1", "2", "3"}
-	if a := Map[int, string](func(e int) string { return fmt.Sprintf("%d", e) }, arr...); !reflect.DeepEqual(a, except) {
+	if a := Map(func(e int) string { return fmt.Sprintf("%d", e) }, arr...); !reflect.DeepEqual(a, except) {
 		t.Error("test failed")
 	}
 }
