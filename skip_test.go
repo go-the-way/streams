@@ -12,12 +12,14 @@
 package streams
 
 import (
-	"fmt"
+	"reflect"
 	"testing"
 )
 
 func TestSkip(t *testing.T) {
-	t.Log(Map(func(in int) string {
-		return fmt.Sprintf("%d", in)
-	}, Skip(1, 1, 2, 3, 4)...))
+	arr := []int{1, 2, 3, 4}
+	except := []int{2, 3, 4}
+	if a := Skip(0, arr...); !reflect.DeepEqual(a, except) {
+		t.Error("test failed")
+	}
 }

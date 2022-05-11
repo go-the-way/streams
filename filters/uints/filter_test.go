@@ -9,35 +9,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package streams
+package ints
 
 import (
-	"reflect"
 	"testing"
 )
 
-func TestGroupBy(t *testing.T) {
-	type groupBy struct {
-		id   string
-		name string
-	}
-	gbs := []*groupBy{
-		{"10", "Apple"},
-		{"10", "Banana"},
-		{"10", "Pear"},
-		{"20", "Pear"},
-		{"30", "Banana"},
-	}
+func Test(t *testing.T) {
 	for _, tc := range []struct {
-		name   string
-		f      func(e *groupBy) (string, string)
-		except any
+		name        string
+		val, except any
 	}{
-		{"ByID", func(e *groupBy) (string, string) { return e.id, e.name }, map[string][]string{"10": {"Apple", "Banana", "Pear"}, "20": {"Pear"}, "30": {"Banana"}}},
-		{"ByName", func(e *groupBy) (string, string) { return e.name, e.id }, map[string][]string{"Apple": {"10"}, "Banana": {"10", "30"}, "Pear": {"10", "20"}}},
+		{"Even", Even(10), true},
+		{"Odd", Odd(10), false},
+		{"Eq", Eq(10)(10), true},
+		{"Gt", Gt(10)(10), false},
+		{"GtEq", GtEq(10)(10), true},
+		{"Lt", Lt(10)(10), false},
+		{"LtEq", LtEq(10)(10), true},
+		{"Eq0", Eq0(10), false},
+		{"NotEq0", NotEq0(10), true},
+		{"Gt0", Gt0(10), true},
+		{"GtEq0", GtEq0(10), true},
+		{"Lt0", Lt0(10), false},
+		{"LtEq0", LtEq0(10), false},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if fArr := GroupBy(tc.f, gbs...); !reflect.DeepEqual(fArr, tc.except) {
+			if tc.val != tc.except {
 				t.Error("test failed")
 			}
 		})

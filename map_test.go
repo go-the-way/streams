@@ -13,12 +13,14 @@ package streams
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
 func TestMap(t *testing.T) {
-	is := Map[int, string](func(in int) string {
-		return fmt.Sprintf("%x", in)
-	}, 1, 2, 3, 4, 5)
-	t.Log(is)
+	arr := []int{1, 2, 3}
+	except := []string{"1", "2", "3"}
+	if a := Map[int, string](func(e int) string { return fmt.Sprintf("%d", e) }, arr...); !reflect.DeepEqual(a, except) {
+		t.Error("test failed")
+	}
 }

@@ -9,26 +9,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package streams
+//
+// Basic Stream API written in Go.(Only supports Go1.18+)
 package streams
-
-import "testing"
-
-func TestIntReduce(t *testing.T) {
-	arr := []int{1, 2, 3, 4}
-	except := 10
-	if sum := Reduce[int, int](func(e int, sum *int) {
-		*sum = *sum + e
-	}, 0, arr...); sum != except {
-		t.Error("test failed")
-	}
-}
-
-func TestStringReduce(t *testing.T) {
-	arr := []string{"1", "2", "3", "4"}
-	except := "1234"
-	if sum := Reduce[string, string](func(e string, sum *string) {
-		*sum = *sum + e
-	}, "", arr...); sum != except {
-		t.Error("test failed")
-	}
-}

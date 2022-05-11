@@ -11,16 +11,23 @@
 
 package streams
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func TestToMap(t *testing.T) {
 	type toMap struct {
 		id   int
 		name string
 	}
-	t.Log(ToMap(func(e *toMap) (int, string) {
+	arr := []*toMap{{10, "Apple"}, {20, "Pear"}}
+	except := map[int]string{10: "Apple", 20: "Pear"}
+	if m := ToMap(func(e *toMap) (int, string) {
 		return e.id, e.name
-	}, &toMap{10, "Apple"}, &toMap{20, "Pear"}))
+	}, arr...); !reflect.DeepEqual(m, except) {
+		t.Error("test failed")
+	}
 }
 
 func TestToMap2(t *testing.T) {
@@ -28,9 +35,14 @@ func TestToMap2(t *testing.T) {
 		id   int
 		name string
 	}
-	t.Log(ToMap2(func(e *toMap) (int, string) {
+	arr := []*toMap{{10, "Apple"}, {20, "Pear"}}
+	except1 := map[int]string{10: "Apple", 20: "Pear"}
+	except2 := map[string]int{"Apple": 10, "Pear": 20}
+	if m1, m2 := ToMap2(func(e *toMap) (int, string) {
 		return e.id, e.name
 	}, func(e *toMap) (string, int) {
 		return e.name, e.id
-	}, &toMap{10, "Apple"}, &toMap{20, "Pear"}))
+	}, arr...); !reflect.DeepEqual(m1, except1) || !reflect.DeepEqual(m2, except2) {
+		t.Error("test failed")
+	}
 }
