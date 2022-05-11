@@ -25,3 +25,23 @@ func Map[I, O any](mapFunc func(in I) O, ins ...I) []O {
 	}
 	return os
 }
+
+// MapMap function
+//
+// KI: input key type
+//
+// VI: input value type
+//
+// KO: output key type
+//
+// VO: output value type
+//
+// mapFunc: the map function
+func MapMap[KI comparable, VI any, KO comparable, VO any](mapFunc func(ki KI, vi VI) (KO, VO), m map[KI]VI) map[KO]VO {
+	om := make(map[KO]VO, 0)
+	for k, v := range m {
+		ko, vo := mapFunc(k, v)
+		om[ko] = vo
+	}
+	return om
+}

@@ -11,6 +11,7 @@ Basic Stream API written in Go.(Only supports Go1.18+)
 ## Functions
 - [Filter](#filter)
 - [Map](#map)
+- [MapMap](#mapmap)
 - [Reduce](#reduce)
 - [Skip](#skip)
 - [GroupBy](#groupby)
@@ -52,6 +53,23 @@ func main() {
 	fmt.Println(streams.Map[int, string](func(in int) string {
 		return fmt.Sprintf("%x", in)
 	}, 1, 2, 3, 4, 5))
+}
+```
+
+### MapMap
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/go-the-way/streams"
+)
+
+func main() {
+	m := map[string]int{"1": 1, "2": 2}
+	fmt.Println(streams.MapMap(func(k string, v int) (string, int) { return k, v + 1 }, m))
 }
 ```
 
