@@ -22,6 +22,11 @@ func Each[E any](eachFunc func(e E), es ...E) {
 	}
 }
 
+// EachPtr function
+//
+// E: element type
+//
+// eachFunc: the each function
 func EachPtr[E any](eachFunc func(e *E), es ...E) {
 	for i := range es {
 		eachFunc(&es[i])
