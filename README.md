@@ -8,6 +8,15 @@ Basic Stream API written in Go.(Only supports Go1.18+)
 [![GoDoc](https://pkg.go.dev/badge/github.com/go-the-way/streams?status.svg)](https://pkg.go.dev/github.com/go-the-way/streams?tab=doc)
 
 ## Functions
+- [Filter](#filter)
+- [Map](#map)
+- [Reduce](#reduce)
+- [Skip](#skip)
+- [GroupBy](#groupby)
+- [ToMap](#tomap)
+- [ToMap2](#tomap2)
+- [Each](#each)
+- [EachPtr](#eachptr)
 
 ### Filter
 
@@ -155,5 +164,42 @@ func main() {
 	}, func(e *toMap) (string, int) {
 		return e.name, e.id
 	}, &toMap{10, "Apple"}, &toMap{20, "Pear"}))
+}
+```
+
+### Each
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/go-the-way/streams"
+)
+
+func main() {
+	arr := []int{0, 1, 2}
+	newArr := make([]int, 0)
+	streams.Each(func(e int) { newArr = append(newArr, e+1) }, arr...)
+	fmt.Println(newArr)
+}
+```
+
+### EachPtr
+
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/go-the-way/streams"
+)
+
+func main() {
+	arr := []int{0, 1, 2} 
+	streams.EachPtr(func(e *int) { *e += 1 }, arr...)
+	fmt.Println(arr)
 }
 ```
