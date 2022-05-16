@@ -18,7 +18,7 @@ import (
 func Test(t *testing.T) {
 	for _, tc := range []struct {
 		name        string
-		val, except any
+		val, expect any
 	}{
 		{"Even", Even(10), true},
 		{"Odd", Odd(10), false},
@@ -35,7 +35,7 @@ func Test(t *testing.T) {
 		{"LtEq0", LtEq0(10), false},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if tc.val != tc.except {
+			if tc.val != tc.expect {
 				t.Error("test failed")
 			}
 		})

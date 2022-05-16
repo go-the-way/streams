@@ -22,10 +22,10 @@ func TestToMap(t *testing.T) {
 		name string
 	}
 	arr := []*toMap{{10, "Apple"}, {20, "Pear"}}
-	except := map[int]string{10: "Apple", 20: "Pear"}
+	expect := map[int]string{10: "Apple", 20: "Pear"}
 	if m := ToMap(func(e *toMap) (int, string) {
 		return e.id, e.name
-	}, arr...); !reflect.DeepEqual(m, except) {
+	}, arr...); !reflect.DeepEqual(m, expect) {
 		t.Error("test failed")
 	}
 }

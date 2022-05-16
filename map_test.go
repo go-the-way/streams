@@ -19,16 +19,16 @@ import (
 
 func TestMap(t *testing.T) {
 	arr := []int{1, 2, 3}
-	except := []string{"1", "2", "3"}
-	if a := Map(func(e int) string { return fmt.Sprintf("%d", e) }, arr...); !reflect.DeepEqual(a, except) {
+	expect := []string{"1", "2", "3"}
+	if a := Map(func(e int) string { return fmt.Sprintf("%d", e) }, arr...); !reflect.DeepEqual(a, expect) {
 		t.Error("test failed")
 	}
 }
 
 func TestMapMap(t *testing.T) {
 	m := map[string]int{"1": 1, "2": 2}
-	except := map[string]int{"1": 2, "2": 3}
-	if a := MapMap(func(k string, v int) (string, int) { return k, v + 1 }, m); !reflect.DeepEqual(a, except) {
+	expect := map[string]int{"1": 2, "2": 3}
+	if a := MapMap(func(k string, v int) (string, int) { return k, v + 1 }, m); !reflect.DeepEqual(a, expect) {
 		t.Error("test failed")
 	}
 }

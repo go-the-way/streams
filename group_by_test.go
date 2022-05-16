@@ -31,13 +31,13 @@ func TestGroupBy(t *testing.T) {
 	for _, tc := range []struct {
 		name   string
 		f      func(e *groupBy) (string, string)
-		except any
+		expect any
 	}{
 		{"ByID", func(e *groupBy) (string, string) { return e.id, e.name }, map[string][]string{"10": {"Apple", "Banana", "Pear"}, "20": {"Pear"}, "30": {"Banana"}}},
 		{"ByName", func(e *groupBy) (string, string) { return e.name, e.id }, map[string][]string{"Apple": {"10"}, "Banana": {"10", "30"}, "Pear": {"10", "20"}}},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if fArr := GroupBy(tc.f, gbs...); !reflect.DeepEqual(fArr, tc.except) {
+			if fArr := GroupBy(tc.f, gbs...); !reflect.DeepEqual(fArr, tc.expect) {
 				t.Error("test failed")
 			}
 		})

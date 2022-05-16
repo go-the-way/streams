@@ -21,7 +21,7 @@ func TestFilter(t *testing.T) {
 	for _, tc := range []struct {
 		name   string
 		f      func(e int) bool
-		except []int
+		expect []int
 	}{
 		{"Gt0", func(e int) bool { return e > 0 }, []int{1, 2, 3, 4}},
 		{"GtEq0", func(e int) bool { return e >= 0 }, []int{0, 1, 2, 3, 4}},
@@ -31,7 +31,7 @@ func TestFilter(t *testing.T) {
 		{"Odd", func(e int) bool { return e%2 != 0 }, []int{1, 3}},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if fArr := Filter(tc.f, arr...); !reflect.DeepEqual(fArr, tc.except) {
+			if fArr := Filter(tc.f, arr...); !reflect.DeepEqual(fArr, tc.expect) {
 				t.Error("test failed")
 			}
 		})

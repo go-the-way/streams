@@ -18,8 +18,8 @@ import (
 
 func TestSkip(t *testing.T) {
 	arr := []int{1, 2, 3, 4}
-	except := []int{2, 3, 4}
-	if a := Skip(0, arr...); !reflect.DeepEqual(a, except) {
+	expect := []int{2, 3, 4}
+	if a := Skip(0, arr...); !reflect.DeepEqual(a, expect) {
 		t.Error("test failed")
 	}
 }

@@ -17,9 +17,9 @@ import (
 )
 
 func TestGenerate(t *testing.T) {
-	except := []int{2, 4, 6, 8}
+	expect := []int{2, 4, 6, 8}
 	es := Generate(1, 4, func(index, step int) int { return step * 2 })
-	if !reflect.DeepEqual(except, es) {
+	if !reflect.DeepEqual(expect, es) {
 		t.Error("test failed")
 	}
 }

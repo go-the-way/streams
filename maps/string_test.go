@@ -16,7 +16,7 @@ import "testing"
 func TestString(t *testing.T) {
 	for _, tc := range []struct {
 		name        string
-		str, except any
+		str, expect any
 	}{
 		{"String2Bool", String2Bool("T"), true},
 		{"String2Int", String2Int("10"), 10},
@@ -34,7 +34,7 @@ func TestString(t *testing.T) {
 		{"String2Float64", String2Float64("10.25"), 10.25},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if tc.str != tc.except {
+			if tc.str != tc.expect {
 				t.Error("test failed")
 			}
 		})

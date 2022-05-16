@@ -18,19 +18,19 @@ import (
 
 func TestEach(t *testing.T) {
 	arr := []int{0, 1, 2}
-	except := []int{1, 2, 3}
+	expect := []int{1, 2, 3}
 	newArr := make([]int, 0)
 	Each(func(e int) { newArr = append(newArr, e+1) }, arr...)
-	if !reflect.DeepEqual(newArr, except) {
+	if !reflect.DeepEqual(newArr, expect) {
 		t.Error("test failed")
 	}
 }
 
 func TestEachPtr(t *testing.T) {
 	arr := []int{0, 1, 2}
-	except := []int{1, 2, 3}
+	expect := []int{1, 2, 3}
 	EachPtr(func(e *int) { *e += 1 }, arr...)
-	if !reflect.DeepEqual(arr, except) {
+	if !reflect.DeepEqual(arr, expect) {
 		t.Error("test failed")
 	}
 }

@@ -17,7 +17,7 @@ func TestInt(t *testing.T) {
 	for _, tc := range []struct {
 		name   string
 		str    string
-		except string
+		expect string
 	}{
 		{"Int2BinaryString", Int2BinaryString(10), "1010"},
 		{"Int2OctalString", Int2OctalString(10), "12"},
@@ -25,7 +25,7 @@ func TestInt(t *testing.T) {
 		{"Int2HexString", Int2HexString(15), "f"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if tc.str != tc.except {
+			if tc.str != tc.expect {
 				t.Error("test failed")
 			}
 		})
