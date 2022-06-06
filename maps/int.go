@@ -14,28 +14,19 @@ package maps
 import "fmt"
 
 var (
-	int2BinaryString = func(in int) string { return fmt.Sprintf("%b", in) }
-	int2OctalString  = func(in int) string { return fmt.Sprintf("%o", in) }
-	int2String       = func(in int) string { return fmt.Sprintf("%d", in) }
-	int2HexString    = func(in int) string { return fmt.Sprintf("%x", in) }
+	// Int2BinaryString
+	// 10 -> 1010
+	Int2BinaryString = func(in int) string { return fmt.Sprintf("%b", in) }
+	// Int2OctalString
+	// 10 -> 12
+	Int2OctalString = func(in int) string { return fmt.Sprintf("%o", in) }
+	// Int2String
+	// 10 -> 10
+	Int2String = func(in int) string { return fmt.Sprintf("%d", in) }
+	// Int2HexString
+	// 15 -> f
+	Int2HexString = func(in int) string { return fmt.Sprintf("%x", in) }
+	// Int2Any
+	// return int to any
+	Int2Any = func(in int) any { return in }
 )
-
-// Int2BinaryString
-// 10 -> 1010
-func Int2BinaryString(in int) string { return Any2Any(in, int2BinaryString) }
-
-// Int2OctalString
-// 10 -> 12
-func Int2OctalString(in int) string { return Any2Any(in, int2OctalString) }
-
-// Int2String
-// 10 -> 10
-func Int2String(in int) string { return Any2Any(in, int2String) }
-
-// Int2HexString
-// 15 -> f
-func Int2HexString(in int) string { return Any2Any(in, int2HexString) }
-
-// Int2Any
-// return int to T
-func Int2Any[T any](in int, mFunc func(in int) T) T { return Any2Any(in, mFunc) }

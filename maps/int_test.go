@@ -12,24 +12,22 @@
 package maps
 
 import (
-	"fmt"
 	"testing"
 )
 
 func TestInt(t *testing.T) {
 	for _, tc := range []struct {
-		name   string
-		str    string
-		expect string
+		name        string
+		val, expect any
 	}{
 		{"Int2BinaryString", Int2BinaryString(10), "1010"},
 		{"Int2OctalString", Int2OctalString(10), "12"},
 		{"Int2String", Int2String(15), "15"},
 		{"Int2HexString", Int2HexString(15), "f"},
-		{"Int2Any", Int2Any(15, func(in int) string { in++; return fmt.Sprintf("%d", in) }), "16"},
+		{"Int2Any", Int2Any(15), 15},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if tc.str != tc.expect {
+			if tc.val != tc.expect {
 				t.Error("test failed")
 			}
 		})

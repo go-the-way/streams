@@ -11,7 +11,9 @@
 
 package maps
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestString(t *testing.T) {
 	for _, tc := range []struct {
