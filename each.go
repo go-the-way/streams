@@ -16,9 +16,9 @@ package streams
 // E: element type
 //
 // eachFunc: the each function
-func Each[E any](eachFunc func(e E), es ...E) {
-	for _, e := range es {
-		eachFunc(e)
+func Each[E any](eachFunc func(i int, e E), es ...E) {
+	for i, e := range es {
+		eachFunc(i, e)
 	}
 }
 
@@ -27,8 +27,8 @@ func Each[E any](eachFunc func(e E), es ...E) {
 // E: element type
 //
 // eachFunc: the each function
-func EachPtr[E any](eachFunc func(e *E), es ...E) {
+func EachPtr[E any](eachFunc func(i int, e *E), es ...E) {
 	for i := range es {
-		eachFunc(&es[i])
+		eachFunc(i, &es[i])
 	}
 }
