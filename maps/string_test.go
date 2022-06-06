@@ -34,6 +34,7 @@ func TestString(t *testing.T) {
 		{"String2UInt64", String2UInt64("10"), uint64(10)},
 		{"String2Float32", String2Float32("10.25"), float32(10.25)},
 		{"String2Float64", String2Float64("10.25"), 10.25},
+		{"String2Any", String2Any("10.25"), "10.25"},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			if tc.str != tc.expect {
