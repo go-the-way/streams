@@ -69,4 +69,8 @@ var (
 	// String2Float64
 	// 10.25 -> 10.25
 	String2Float64 = func(str string) (f float64) { f, _ = strconv.ParseFloat(str, 64); return }
+
+	// String2Any
+	// 10.25 -> 10.25
+	String2Any = func(str string) any { return str }
 )
