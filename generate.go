@@ -16,7 +16,7 @@ package streams
 // E: element type
 //
 // genFunc: the generate function
-func Generate[E any](start int, end int, genFunc func(index, step int) E) []E {
+func Generate[E any](start, end int, genFunc func(index, step int) E) []E {
 	length := end - start + 1
 	es := make([]E, length, length)
 	index := 0

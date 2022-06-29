@@ -20,9 +20,9 @@ package streams
 // V: the map value type
 //
 // groupByFunc: the group by function
-func GroupBy[E any, K comparable, V any](groupByFunc func(e E) (K, V), es ...E) map[K][]V {
+func GroupBy[E any, K comparable, V any](es []E, groupByFunc func(e E) (K, V)) map[K][]V {
 	m := make(map[K][]V)
-	for _, e := range es {
+	ForEach(es, func(_ int, e E) {
 		k, v := groupByFunc(e)
 		if vs, have := m[k]; have {
 			vs = append(vs, v)
@@ -30,6 +30,33 @@ func GroupBy[E any, K comparable, V any](groupByFunc func(e E) (K, V), es ...E) 
 		} else {
 			m[k] = []V{v}
 		}
-	}
+	})
 	return m
+}
+
+// GroupByThenMap function
+//
+// E: element type
+//
+// K: the map key type
+//
+// V: the map value type
+//
+// groupByFunc: the group by function
+func GroupByThenMap[E any, K comparable, V, VV any](es []E, groupByFunc func(e E) (K, V), mapFunc func(vs []V) VV) map[K]VV {
+	m := make(map[K][]V)
+	mm := make(map[K]VV)
+	ForEach(es, func(_ int, e E) {
+		k, v := groupByFunc(e)
+		if vs, have := m[k]; have {
+			vs = append(vs, v)
+			m[k] = vs
+		} else {
+			m[k] = []V{v}
+		}
+	})
+	MapEach(m, func(k K, v []V) {
+		mm[k] = mapFunc(v)
+	})
+	return mm
 }

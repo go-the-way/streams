@@ -13,24 +13,34 @@ package streams
 
 import (
 	"reflect"
+	"sync/atomic"
 	"testing"
 )
 
-func TestEach(t *testing.T) {
+func TestForEachConcurrent(t *testing.T) {
 	arr := []int{0, 1, 2}
-	expect := []int{1, 2, 3}
-	newArr := make([]int, 0)
-	Each(func(_, e int) { newArr = append(newArr, e+1) }, arr...)
-	if !reflect.DeepEqual(newArr, expect) {
+	val := int32(0)
+	expect := int32(6)
+	ForEachConcurrent(arr, func(_, e int) { atomic.AddInt32(&val, int32(e+1)) })
+	if !reflect.DeepEqual(val, expect) {
 		t.Error("test failed")
 	}
 }
 
-func TestEachPtr(t *testing.T) {
+func TestForEachPtrConcurrent(t *testing.T) {
 	arr := []int{0, 1, 2}
 	expect := []int{1, 2, 3}
-	EachPtr(func(_ int, e *int) { *e += 1 }, arr...)
+	ForEachPtrConcurrent(arr, func(_ int, e *int) { *e += 1 })
 	if !reflect.DeepEqual(arr, expect) {
+		t.Error("test failed")
+	}
+}
+
+func TestMapEachConcurrent(t *testing.T) {
+	m := map[string]int{"a": 1, "b": 2}
+	expect := map[string]int{"a": 2, "b": 3}
+	MapEachConcurrent(m, func(k string, v int) { m[k] = v + 1 })
+	if !reflect.DeepEqual(m, expect) {
 		t.Error("test failed")
 	}
 }

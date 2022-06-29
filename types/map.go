@@ -14,10 +14,10 @@ package types
 import "reflect"
 
 // Map define
-type Map[K comparable, V comparable] map[K]V
+type Map[K, V comparable] map[K]V
 
 // MakeMap make Map instance
-func MakeMap[K comparable, V comparable]() Map[K, V] {
+func MakeMap[K, V comparable]() Map[K, V] {
 	return Map[K, V]{}
 }
 

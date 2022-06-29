@@ -16,9 +16,7 @@ import "testing"
 func TestIntReduce(t *testing.T) {
 	arr := []int{1, 2, 3, 4}
 	expect := 10
-	if sum := Reduce(func(e int, sum *int) {
-		*sum = *sum + e
-	}, 0, arr...); sum != expect {
+	if sum := Reduce(arr, 0, func(e int, sum *int) { *sum = *sum + e }); sum != expect {
 		t.Error("test failed")
 	}
 }
@@ -26,9 +24,15 @@ func TestIntReduce(t *testing.T) {
 func TestStringReduce(t *testing.T) {
 	arr := []string{"1", "2", "3", "4"}
 	expect := "1234"
-	if sum := Reduce(func(e string, sum *string) {
-		*sum = *sum + e
-	}, "", arr...); sum != expect {
+	if sum := Reduce(arr, "", func(e string, sum *string) { *sum = *sum + e }); sum != expect {
+		t.Error("test failed")
+	}
+}
+
+func TestReduceMap(t *testing.T) {
+	m := map[int]int{1: 1, 2: 2}
+	expect := 6
+	if sum := ReduceMap(m, 0, func(k, v int, sum *int) { *sum += k + v }); sum != expect {
 		t.Error("test failed")
 	}
 }

@@ -13,6 +13,7 @@ package streams
 
 import (
 	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -37,7 +38,36 @@ func TestGroupBy(t *testing.T) {
 		{"ByName", func(e *groupBy) (string, string) { return e.name, e.id }, map[string][]string{"Apple": {"10"}, "Banana": {"10", "30"}, "Pear": {"10", "20"}}},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if fArr := GroupBy(tc.f, gbs...); !reflect.DeepEqual(fArr, tc.expect) {
+			if fArr := GroupBy(gbs, tc.f); !reflect.DeepEqual(fArr, tc.expect) {
+				t.Error("test failed")
+			}
+		})
+	}
+}
+
+func TestGroupByThenMap(t *testing.T) {
+	type groupByThenMap struct {
+		id   string
+		name string
+	}
+	gbs := []*groupByThenMap{
+		{"10", "Apple"},
+		{"10", "Banana"},
+		{"10", "Pear"},
+		{"20", "Pear"},
+		{"30", "Banana"},
+	}
+	for _, tc := range []struct {
+		name   string
+		f      func(e *groupByThenMap) (string, string)
+		mf     func(str []string) string
+		expect any
+	}{
+		{"ByID", func(e *groupByThenMap) (string, string) { return e.id, e.name }, func(str []string) string { return strings.Join(str, "") }, map[string]string{"10": "AppleBananaPear", "20": "Pear", "30": "Banana"}},
+		{"ByName", func(e *groupByThenMap) (string, string) { return e.name, e.id }, func(str []string) string { return strings.Join(str, "") }, map[string]string{"Apple": "10", "Banana": "1030", "Pear": "1020"}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if fArr := GroupByThenMap(gbs, tc.f, tc.mf); !reflect.DeepEqual(fArr, tc.expect) {
 				t.Error("test failed")
 			}
 		})

@@ -11,24 +11,37 @@
 
 package streams
 
-// Each function
+// ForEach function
 //
 // E: element type
 //
 // eachFunc: the each function
-func Each[E any](eachFunc func(i int, e E), es ...E) {
+func ForEach[E any](es []E, eachFunc func(i int, e E)) {
 	for i, e := range es {
 		eachFunc(i, e)
 	}
 }
 
-// EachPtr function
+// ForEachPtr function
 //
 // E: element type
 //
 // eachFunc: the each function
-func EachPtr[E any](eachFunc func(i int, e *E), es ...E) {
+func ForEachPtr[E any](es []E, eachFunc func(i int, e *E)) {
 	for i := range es {
 		eachFunc(i, &es[i])
+	}
+}
+
+// MapEach function
+//
+// K: the map key type
+//
+// V: the map value type
+//
+// eachFunc: the each function
+func MapEach[K comparable, V any](m map[K]V, eachFunc func(k K, v V)) {
+	for k, v := range m {
+		eachFunc(k, v)
 	}
 }

@@ -13,14 +13,30 @@ package streams
 
 // Reduce function
 //
-// ID: identity value type
-//
 // E: element type
 //
-// accumulatorFunc: the accumulator function
-func Reduce[ID, E any](accumulatorFunc func(e E, sum *ID), id ID, es ...E) ID {
+// R: result type
+//
+// reduceFunc: the reduce function
+func Reduce[E, R any](es []E, r R, reduceFunc func(e E, sum *R)) R {
 	for _, e := range es {
-		accumulatorFunc(e, &id)
+		reduceFunc(e, &r)
 	}
-	return id
+	return r
+}
+
+// ReduceMap function
+//
+// K: map key type
+//
+// V: map key type
+//
+// R: result type
+//
+// reduceFunc: the reduce function
+func ReduceMap[K comparable, V, R any](m map[K]V, r R, reduceFunc func(k K, v V, sum *R)) R {
+	for k, v := range m {
+		reduceFunc(k, v, &r)
+	}
+	return r
 }
