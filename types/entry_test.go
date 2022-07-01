@@ -9,35 +9,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package int16s
+package types
 
 import (
+	"reflect"
 	"testing"
 )
 
-func Test(t *testing.T) {
-	for _, tc := range []struct {
-		name        string
-		val, expect any
-	}{
-		{"Even", Even(10), true},
-		{"Odd", Odd(10), false},
-		{"Eq", Eq(10)(10), true},
-		{"Gt", Gt(10)(10), false},
-		{"GtEq", GtEq(10)(10), true},
-		{"Lt", Lt(10)(10), false},
-		{"LtEq", LtEq(10)(10), true},
-		{"Eq0", Eq0(10), false},
-		{"NotEq0", NotEq0(10), true},
-		{"Gt0", Gt0(10), true},
-		{"GtEq0", GtEq0(10), true},
-		{"Lt0", Lt0(10), false},
-		{"LtEq0", LtEq0(10), false},
-	} {
-		t.Run(tc.name, func(t *testing.T) {
-			if tc.val != tc.expect {
-				t.Error("test failed!")
-			}
-		})
+func TestNewEntry(t *testing.T) {
+	e1 := NewEntry(10, 20)
+	expect := &Entry[int, int]{10, 20}
+	if !reflect.DeepEqual(e1, expect) {
+		t.Fatal("test failed!")
+	}
+}
+
+func TestMapToEntry(t *testing.T) {
+	m := map[int]string{1: "1", 2: "2"}
+	expect := []*Entry[int, string]{{1, "1"}, {2, "2"}}
+	if !reflect.DeepEqual(MapToEntry[int, string](m), expect) {
+		t.Fatal("test failed!")
+	}
+}
+
+func TestEntryToMap(t *testing.T) {
+	es := []*Entry[int, string]{{1, "1"}, {2, "2"}}
+	expect := map[int]string{1: "1", 2: "2"}
+	if !reflect.DeepEqual(EntryToMap[int, string](es), expect) {
+		t.Fatal("test failed!")
 	}
 }

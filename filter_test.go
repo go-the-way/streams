@@ -32,7 +32,7 @@ func TestFilter(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			if fArr := Filter(arr, tc.f); !reflect.DeepEqual(fArr, tc.expect) {
-				t.Error("test failed")
+				t.Error("test failed!")
 			}
 		})
 	}
@@ -56,7 +56,7 @@ func TestFilterThenMap(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			if fArr := FilterThenMap(arr, tc.f, tc.mf); !reflect.DeepEqual(fArr, tc.expect) {
-				t.Error("test failed")
+				t.Error("test failed!")
 			}
 		})
 	}
@@ -80,7 +80,7 @@ func TestFilterThenToMap(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			if fArr := FilterThenToMap(arr, tc.f, tc.mf); !reflect.DeepEqual(fArr, tc.expect) {
-				t.Error("test failed")
+				t.Error("test failed!")
 			}
 		})
 	}

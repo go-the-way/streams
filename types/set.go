@@ -20,10 +20,10 @@ func MakeSet[E comparable]() Set[E] {
 }
 
 // Add an element
-func (s Set[E]) Add(element E) { s[element] = struct{}{} }
+func (s Set[E]) Add(element E) Set[E] { s[element] = struct{}{}; return s }
 
 // Delete element
-func (s Set[E]) Delete(element E) { delete(s, element) }
+func (s Set[E]) Delete(element E) Set[E] { delete(s, element); return s }
 
 // Contains element
 func (s Set[E]) Contains(element E) bool { _, have := s[element]; return have }

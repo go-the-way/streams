@@ -13,14 +13,14 @@ package streams
 
 // Reduce function
 //
-// E: element type
+// T: element type
 //
 // R: result type
 //
 // reduceFunc: the reduce function
-func Reduce[E, R any](es []E, r R, reduceFunc func(e E, sum *R)) R {
-	for _, e := range es {
-		reduceFunc(e, &r)
+func Reduce[T, R any](ts []T, r R, reduceFunc func(t T, sum *R)) R {
+	for _, t := range ts {
+		reduceFunc(t, &r)
 	}
 	return r
 }

@@ -13,57 +13,57 @@ package bytes
 
 var (
 	// Even filter
-	// true if e % 2 == 0
+	// true if v % 2 == 0
 	// false else
-	Even = func(e byte) bool { return e%2 == 0 }
+	Even = func(v byte) bool { return v%2 == 0 }
 	// Odd filter
-	// true if e % 2 != 0
+	// true if v % 2 != 0
 	// false else
-	Odd = func(e byte) bool { return !Even(e) }
+	Odd = func(v byte) bool { return !Even(v) }
 
 	// Eq filter
-	// true if e == eq
+	// true if v == eq
 	// false else
-	Eq = func(eq byte) func(e byte) bool { return func(e byte) bool { return e == eq } }
+	Eq = func(eq byte) func(v byte) bool { return func(v byte) bool { return v == eq } }
 	// Gt filter
-	// true if e > gt
+	// true if v > gt
 	// false else
-	Gt = func(gt byte) func(e byte) bool { return func(e byte) bool { return e > gt } }
+	Gt = func(gt byte) func(v byte) bool { return func(v byte) bool { return v > gt } }
 	// GtEq filter
-	// true if e >= gtEq
+	// true if v >= gtEq
 	// false else
-	GtEq = func(gtEq byte) func(e byte) bool { return func(e byte) bool { return e >= gtEq } }
+	GtEq = func(gtEq byte) func(v byte) bool { return func(v byte) bool { return v >= gtEq } }
 	// Lt filter
-	// true if e < lt
+	// true if v < lt
 	// false else
-	Lt = func(lt byte) func(e byte) bool { return func(e byte) bool { return e < lt } }
+	Lt = func(lt byte) func(v byte) bool { return func(v byte) bool { return v < lt } }
 	// LtEq filter
-	// true if e <= ltEq
+	// true if v <= ltEq
 	// false else
-	LtEq = func(ltEq byte) func(e byte) bool { return func(e byte) bool { return e <= ltEq } }
+	LtEq = func(ltEq byte) func(v byte) bool { return func(v byte) bool { return v <= ltEq } }
 
 	// Eq0 filter
-	// true if e == 0
+	// true if v == 0
 	// false else
-	Eq0 = func(e byte) bool { return Eq(0)(e) }
+	Eq0 = func(v byte) bool { return Eq(0)(v) }
 	// NotEq0 filter
-	// true if e != 0
+	// true if v != 0
 	// false else
-	NotEq0 = func(e byte) bool { return !Eq0(e) }
+	NotEq0 = func(v byte) bool { return !Eq0(v) }
 	// Gt0 filter
-	// true if e > 0
+	// true if v > 0
 	// false else
-	Gt0 = func(e byte) bool { return Gt(0)(e) }
+	Gt0 = func(v byte) bool { return Gt(0)(v) }
 	// GtEq0 filter
-	// true if e >= 0
+	// true if v >= 0
 	// false else
-	GtEq0 = func(e byte) bool { return GtEq(0)(e) }
+	GtEq0 = func(v byte) bool { return GtEq(0)(v) }
 	// Lt0 filter
-	// true if e < 0
+	// true if v < 0
 	// false else
-	Lt0 = func(e byte) bool { return Lt(0)(e) }
+	Lt0 = func(v byte) bool { return Lt(0)(v) }
 	// LtEq0 filter
-	// true if e <= 0
+	// true if v <= 0
 	// false else
-	LtEq0 = func(e byte) bool { return LtEq(0)(e) }
+	LtEq0 = func(v byte) bool { return LtEq(0)(v) }
 )

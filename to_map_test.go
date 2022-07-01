@@ -27,7 +27,7 @@ func TestToMap(t *testing.T) {
 	if m := ToMap(arr, func(e *toMap) (int, string) {
 		return e.id, e.name
 	}); !reflect.DeepEqual(m, expect) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }
 
@@ -43,7 +43,7 @@ func TestToMapThenMap(t *testing.T) {
 	}, func(k int, v string) (string, int) {
 		return v, k
 	}); !reflect.DeepEqual(m, expect) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }
 
@@ -60,7 +60,7 @@ func TestToMap2(t *testing.T) {
 	}, func(e *toMap) (string, int) {
 		return e.name, e.id
 	}); !reflect.DeepEqual(m1, except1) || !reflect.DeepEqual(m2, except2) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }
 
@@ -80,6 +80,40 @@ func TestToMap3(t *testing.T) {
 	}, func(e *toMap) (string, int) {
 		return fmt.Sprintf("%s1", e.name), e.id
 	}); !reflect.DeepEqual(m1, except1) || !reflect.DeepEqual(m2, except2) || !reflect.DeepEqual(m3, except3) {
-		t.Error("test failed")
+		t.Error("test failed!")
+	}
+}
+
+func TestMapToMap(t *testing.T) {
+	m := map[string]int{"1": 1, "2": 2}
+	expect := map[string]int{"1": 2, "2": 3}
+	if a := MapToMap(m, func(k string, v int) (string, int) { return k, v + 1 }); !reflect.DeepEqual(a, expect) {
+		t.Error("test failed!")
+	}
+}
+
+func TestMapToMapThenFilter(t *testing.T) {
+	{
+		m := map[string]int{"1": 1, "2": 2}
+		expect := map[string]int{"1": 2, "2": 3}
+		if a := MapToMapThenFilter(m, func(k string, v int) (string, int) { return k, v + 1 }, func(k string, v int) bool { return true }); !reflect.DeepEqual(a, expect) {
+			t.Error("test failed!")
+		}
+	}
+	{
+		m := map[string]int{"1": 1, "2": 2}
+		expect := map[string]int{}
+		if a := MapToMapThenFilter(m, func(k string, v int) (string, int) { return k, v + 1 }, func(k string, v int) bool { return false }); !reflect.DeepEqual(a, expect) {
+			t.Error("test failed!")
+		}
+	}
+}
+
+func TestMapToMapThenReduce(t *testing.T) {
+	rF := func(k string, v int, sum *string) { *sum += fmt.Sprintf("%s%d", k, v) }
+	m := map[string]int{"1": 1, "2": 2}
+	expect := "1223"
+	if a := MapToMapThenReduce(m, func(k string, v int) (string, int) { return k, v + 1 }, "", rF); !reflect.DeepEqual(a, expect) {
+		t.Error("test failed!")
 	}
 }

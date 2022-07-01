@@ -9,34 +9,39 @@ Basic Stream API written in Go.(Only supports Go1.18+)
 [![GoDoc](https://pkg.go.dev/badge/github.com/go-the-way/streams?status.svg)](https://pkg.go.dev/github.com/go-the-way/streams?tab=doc)
 
 ## Functions
-- Filter
-- Map
-- MapMap
-- Reduce
-- Skip
-- GroupBy
-- ToMap
-- ToMap2
-- ForEach
-- ForEachPtr
-
-## New functions
 - Ternary
 - TernaryV
 - IfElse
 - SwitchCase
 - SwitchCaseV
+- Filter
 - FilterThenMap
 - FilterThenToMap
+- ForEach
+- ForEachPtr
+- MapEach
 - ForEachConcurrent
 - ForEachPtrConcurrent
 - MapEachConcurrent
+- Generate
+- GroupBy
 - GroupByThenMap
-- ForEachConcurrent
+- Map
 - MapThenFilter
 - MapThenReduce
+- MapMap
 - MapMapThenFilter
 - MapMapThenReduce
+- Reduce
 - ReduceMap
+- ToMap
 - ToMapThenMap
+- ToMap2
 - ToMap3
+- MapToMap
+- MapToMapThenFilter
+- MapToMapThenReduce
+- ToSet
+- ToSetThenMap
+- ToSet2
+- ToSet3

@@ -13,23 +13,23 @@ package streams
 
 // ForEach function
 //
-// E: element type
+// T: element type
 //
 // eachFunc: the each function
-func ForEach[E any](es []E, eachFunc func(i int, e E)) {
-	for i, e := range es {
-		eachFunc(i, e)
+func ForEach[T any](ts []T, eachFunc func(i int, t T)) {
+	for i, t := range ts {
+		eachFunc(i, t)
 	}
 }
 
 // ForEachPtr function
 //
-// E: element type
+// T: element type
 //
 // eachFunc: the each function
-func ForEachPtr[E any](es []E, eachFunc func(i int, e *E)) {
-	for i := range es {
-		eachFunc(i, &es[i])
+func ForEachPtr[T any](ts []T, eachFunc func(i int, t *T)) {
+	for i := range ts {
+		eachFunc(i, &ts[i])
 	}
 }
 

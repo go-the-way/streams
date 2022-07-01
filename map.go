@@ -66,67 +66,57 @@ func MapThenReduce[I, O, R any](ins []I, mapFunc func(in I) O, r R, reduceFunc f
 
 // MapMap function
 //
-// KI: input key type
+// K: the map key type
 //
-// KO: output key type
-//
-// VI: input value type
-//
-// VO: output value type
-//
-// mapFunc: the map function
-func MapMap[KI, KO comparable, VI, VO any](m map[KI]VI, mapFunc func(ki KI, vi VI) (KO, VO)) map[KO]VO {
-	om := make(map[KO]VO, 0)
-	for k, v := range m {
-		ko, vo := mapFunc(k, v)
-		om[ko] = vo
-	}
-	return om
-}
-
-// MapMapThenFilter function
-//
-// KI: input key type
-//
-// KO: output key type
-//
-// VI: input value type
-//
-// VO: output value type
-//
-// mapFunc: the map function
-//
-// filterFunc: the filter function
-func MapMapThenFilter[KI, KO comparable, VI, VO any](m map[KI]VI, mapFunc func(ki KI, vi VI) (KO, VO), filterFunc func(KO, VO) bool) map[KO]VO {
-	om := make(map[KO]VO, 0)
-	for k, v := range m {
-		if ko, vo := mapFunc(k, v); filterFunc(ko, vo) {
-			om[ko] = vo
-		}
-	}
-	return om
-}
-
-// MapMapThenReduce function
-//
-// KI: input key type
-//
-// KO: output key type
-//
-// VI: input value type
-//
-// VO: output value type
+// V: the map value type
 //
 // R: result type
 //
 // mapFunc: the map function
+func MapMap[K comparable, V, R any](m map[K]V, mapFunc func(k K, v V) R) []R {
+	rs := make([]R, 0)
+	for k, v := range m {
+		rs = append(rs, mapFunc(k, v))
+	}
+	return rs
+}
+
+// MapMapThenFilter function
+//
+// I: input element type
+//
+// O: output element type
+//
+// mapFunc: the map function
+//
+// filterFunc: the filter function
+func MapMapThenFilter[K comparable, V, R any](m map[K]V, mapFunc func(k K, v V) R, filterFunc func(r R) bool) []R {
+	rs := make([]R, 0)
+	for k, v := range m {
+		if r := mapFunc(k, v); filterFunc(r) {
+			rs = append(rs, r)
+		}
+	}
+	return rs
+}
+
+// MapMapThenReduce function
+//
+// K: the map key type
+//
+// V: the map value type
+//
+// R: result type
+//
+// RR: reduce type
+//
+// mapFunc: the map function
 //
 // reduceFunc: the reduce function
-func MapMapThenReduce[KI, KO comparable, VI, VO, R any](m map[KI]VI, mapFunc func(ki KI, vi VI) (KO, VO), r R, reduceFunc func(k KO, v VO, sum *R)) R {
-	om := make(map[KO]VO, 0)
+func MapMapThenReduce[K comparable, V, R, RR any](m map[K]V, mapFunc func(k K, v V) R, rr RR, reduceFunc func(r R, sum *RR)) RR {
+	rs := make([]R, 0)
 	for k, v := range m {
-		ko, vo := mapFunc(k, v)
-		om[ko] = vo
+		rs = append(rs, mapFunc(k, v))
 	}
-	return ReduceMap(om, r, reduceFunc)
+	return Reduce(rs, rr, reduceFunc)
 }

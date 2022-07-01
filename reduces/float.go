@@ -14,6 +14,6 @@ package reduces
 var (
 	Float32      = func(e float32, sum *float32) { *sum += e }                       // Float32 reduce
 	Float64      = func(e float64, sum *float64) { *sum += e }                       // Float64 reduce
-	SliceFloat32 = func(es []float32, sum *[]float32) { *sum = append(*sum, es...) } // SliceFloat32 reduce
-	SliceFloat64 = func(es []float64, sum *[]float64) { *sum = append(*sum, es...) } // SliceFloat64 reduce
+	SliceFloat32 = func(ts []float32, sum *[]float32) { *sum = append(*sum, ts...) } // SliceFloat32 reduce
+	SliceFloat64 = func(ts []float64, sum *[]float64) { *sum = append(*sum, ts...) } // SliceFloat64 reduce
 )

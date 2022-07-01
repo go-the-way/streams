@@ -9,33 +9,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package float32s
+package types
 
-import (
-	"testing"
-)
+type Entry[K comparable, V any] struct {
+	K K
+	V V
+}
 
-func Test(t *testing.T) {
-	for _, tc := range []struct {
-		name        string
-		val, expect any
-	}{
-		{"Eq", Eq(10)(10), true},
-		{"Gt", Gt(10)(10), false},
-		{"GtEq", GtEq(10)(10), true},
-		{"Lt", Lt(10)(10), false},
-		{"LtEq", LtEq(10)(10), true},
-		{"Eq0", Eq0(10), false},
-		{"NotEq0", NotEq0(10), true},
-		{"Gt0", Gt0(10), true},
-		{"GtEq0", GtEq0(10), true},
-		{"Lt0", Lt0(10), false},
-		{"LtEq0", LtEq0(10), false},
-	} {
-		t.Run(tc.name, func(t *testing.T) {
-			if tc.val != tc.expect {
-				t.Error("test failed!")
-			}
-		})
+func NewEntry[K comparable, V any](k K, v V) *Entry[K, V] { return &Entry[K, V]{k, v} }
+
+func MapToEntry[K comparable, V any](m map[K]V) []*Entry[K, V] {
+	ts := make([]*Entry[K, V], 0)
+	for k, v := range m {
+		ts = append(ts, NewEntry[K, V](k, v))
 	}
+	return ts
+}
+
+func EntryToMap[K comparable, V any](es []*Entry[K, V]) map[K]V {
+	m := make(map[K]V, 0)
+	for _, e := range es {
+		m[e.K] = e.V
+	}
+	return m
 }

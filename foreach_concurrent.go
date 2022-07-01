@@ -15,28 +15,28 @@ import "sync"
 
 // ForEachConcurrent function
 //
-// E: element type
+// T: element type
 //
 // eachFunc: the each function
-func ForEachConcurrent[E any](es []E, eachFunc func(i int, e E)) {
+func ForEachConcurrent[T any](ts []T, eachFunc func(i int, t T)) {
 	wg := &sync.WaitGroup{}
-	wg.Add(len(es))
-	for i, e := range es {
-		go func(i int, e E) { eachFunc(i, e); wg.Done() }(i, e)
+	wg.Add(len(ts))
+	for i, t := range ts {
+		go func(i int, t T) { eachFunc(i, t); wg.Done() }(i, t)
 	}
 	wg.Wait()
 }
 
 // ForEachPtrConcurrent function
 //
-// E: element type
+// T: element type
 //
 // eachFunc: the each function
-func ForEachPtrConcurrent[E any](es []E, eachFunc func(i int, e *E)) {
+func ForEachPtrConcurrent[T any](ts []T, eachFunc func(i int, t *T)) {
 	wg := &sync.WaitGroup{}
-	wg.Add(len(es))
-	for i := range es {
-		go func(i int, e *E) { eachFunc(i, e); wg.Done() }(i, &es[i])
+	wg.Add(len(ts))
+	for i := range ts {
+		go func(i int, t *T) { eachFunc(i, t); wg.Done() }(i, &ts[i])
 	}
 	wg.Wait()
 }

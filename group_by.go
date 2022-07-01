@@ -13,17 +13,17 @@ package streams
 
 // GroupBy function
 //
-// E: element type
+// T: element type
 //
 // K: the map key type
 //
 // V: the map value type
 //
 // groupByFunc: the group by function
-func GroupBy[E any, K comparable, V any](es []E, groupByFunc func(e E) (K, V)) map[K][]V {
+func GroupBy[T any, K comparable, V any](ts []T, groupByFunc func(t T) (K, V)) map[K][]V {
 	m := make(map[K][]V)
-	ForEach(es, func(_ int, e E) {
-		k, v := groupByFunc(e)
+	ForEach(ts, func(_ int, t T) {
+		k, v := groupByFunc(t)
 		if vs, have := m[k]; have {
 			vs = append(vs, v)
 			m[k] = vs
@@ -36,18 +36,18 @@ func GroupBy[E any, K comparable, V any](es []E, groupByFunc func(e E) (K, V)) m
 
 // GroupByThenMap function
 //
-// E: element type
+// T: element type
 //
 // K: the map key type
 //
 // V: the map value type
 //
 // groupByFunc: the group by function
-func GroupByThenMap[E any, K comparable, V, VV any](es []E, groupByFunc func(e E) (K, V), mapFunc func(vs []V) VV) map[K]VV {
+func GroupByThenMap[T any, K comparable, V, VV any](ts []T, groupByFunc func(t T) (K, V), mapFunc func(vs []V) VV) map[K]VV {
 	m := make(map[K][]V)
 	mm := make(map[K]VV)
-	ForEach(es, func(_ int, e E) {
-		k, v := groupByFunc(e)
+	ForEach(ts, func(_ int, t T) {
+		k, v := groupByFunc(t)
 		if vs, have := m[k]; have {
 			vs = append(vs, v)
 			m[k] = vs

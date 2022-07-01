@@ -39,7 +39,7 @@ func TestGroupBy(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			if fArr := GroupBy(gbs, tc.f); !reflect.DeepEqual(fArr, tc.expect) {
-				t.Error("test failed")
+				t.Error("test failed!")
 			}
 		})
 	}
@@ -68,7 +68,7 @@ func TestGroupByThenMap(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			if fArr := GroupByThenMap(gbs, tc.f, tc.mf); !reflect.DeepEqual(fArr, tc.expect) {
-				t.Error("test failed")
+				t.Error("test failed!")
 			}
 		})
 	}

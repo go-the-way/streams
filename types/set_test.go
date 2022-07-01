@@ -31,8 +31,8 @@ func TestSet(t *testing.T) {
 	}
 
 	str := ""
-	set.Iterate(func(e string) {
-		str += fmt.Sprintf("%s", e)
+	set.Iterate(func(t string) {
+		str += fmt.Sprintf("%s", t)
 	})
 
 	if str != "hello" {

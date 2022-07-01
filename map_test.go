@@ -22,7 +22,7 @@ func TestMap(t *testing.T) {
 	arr := []int{1, 2, 3}
 	expect := []string{"1", "2", "3"}
 	if a := Map(arr, func(e int) string { return fmt.Sprintf("%d", e) }); !reflect.DeepEqual(a, expect) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }
 
@@ -31,14 +31,14 @@ func TestMapThenFilter(t *testing.T) {
 		arr := []int{1, 2, 3}
 		expect := []string{"1", "2", "3"}
 		if a := MapThenFilter(arr, func(e int) string { return fmt.Sprintf("%d", e) }, func(e string) bool { return true }); !reflect.DeepEqual(a, expect) {
-			t.Error("test failed")
+			t.Error("test failed!")
 		}
 	}
 	{
 		arr := []int{1, 2, 3}
 		expect := make([]string, 0)
 		if a := MapThenFilter(arr, func(e int) string { return fmt.Sprintf("%d", e) }, func(e string) bool { return false }); !reflect.DeepEqual(a, expect) {
-			t.Error("test failed")
+			t.Error("test failed!")
 		}
 	}
 }
@@ -47,40 +47,30 @@ func TestMapThenReduce(t *testing.T) {
 	arr := []int{1, 2, 3}
 	expect := "123"
 	if a := MapThenReduce(arr, func(e int) string { return fmt.Sprintf("%d", e) }, "", reduces.String); !reflect.DeepEqual(a, expect) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }
 
 func TestMapMap(t *testing.T) {
-	m := map[string]int{"1": 1, "2": 2}
-	expect := map[string]int{"1": 2, "2": 3}
-	if a := MapMap(m, func(k string, v int) (string, int) { return k, v + 1 }); !reflect.DeepEqual(a, expect) {
-		t.Error("test failed")
+	m := map[int]string{1: "1"}
+	expect := []int{1}
+	if val := MapMap(m, func(k int, v string) int { return k }); !reflect.DeepEqual(val, expect) {
+		t.Error("test failed!")
 	}
 }
 
 func TestMapMapThenFilter(t *testing.T) {
-	{
-		m := map[string]int{"1": 1, "2": 2}
-		expect := map[string]int{"1": 2, "2": 3}
-		if a := MapMapThenFilter(m, func(k string, v int) (string, int) { return k, v + 1 }, func(k string, v int) bool { return true }); !reflect.DeepEqual(a, expect) {
-			t.Error("test failed")
-		}
-	}
-	{
-		m := map[string]int{"1": 1, "2": 2}
-		expect := map[string]int{}
-		if a := MapMapThenFilter(m, func(k string, v int) (string, int) { return k, v + 1 }, func(k string, v int) bool { return false }); !reflect.DeepEqual(a, expect) {
-			t.Error("test failed")
-		}
+	m := map[int]string{1: "1", 2: "2"}
+	expect := []int{1}
+	if val := MapMapThenFilter(m, func(k int, v string) int { return k }, func(r int) bool { return r == 1 }); !reflect.DeepEqual(val, expect) {
+		t.Error("test failed!")
 	}
 }
 
 func TestMapMapThenReduce(t *testing.T) {
-	rF := func(k string, v int, sum *string) { *sum += fmt.Sprintf("%s%d", k, v) }
-	m := map[string]int{"1": 1, "2": 2}
-	expect := "1223"
-	if a := MapMapThenReduce(m, func(k string, v int) (string, int) { return k, v + 1 }, "", rF); !reflect.DeepEqual(a, expect) {
-		t.Error("test failed")
+	m := map[int]string{1: "1", 2: "2"}
+	expect := 3
+	if val := MapMapThenReduce(m, func(k int, v string) int { return k }, 0, reduces.Int); !reflect.DeepEqual(val, expect) {
+		t.Error("test failed!")
 	}
 }

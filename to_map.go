@@ -13,17 +13,17 @@ package streams
 
 // ToMap function
 //
-// E: element type
+// T: element type
 //
 // K: the map key type
 //
 // V: the map value type
 //
 // toMapFunc: the to map function
-func ToMap[E any, K comparable, V any](es []E, toMapFunc func(e E) (K, V)) map[K]V {
+func ToMap[T any, K comparable, V any](ts []T, toMapFunc func(t T) (K, V)) map[K]V {
 	m := make(map[K]V, 0)
-	for _, e := range es {
-		k, v := toMapFunc(e)
+	for _, t := range ts {
+		k, v := toMapFunc(t)
 		m[k] = v
 	}
 	return m
@@ -31,7 +31,7 @@ func ToMap[E any, K comparable, V any](es []E, toMapFunc func(e E) (K, V)) map[K
 
 // ToMapThenMap function
 //
-// E: element type
+// T: element type
 //
 // K: the map key type
 //
@@ -42,10 +42,10 @@ func ToMap[E any, K comparable, V any](es []E, toMapFunc func(e E) (K, V)) map[K
 // VV: the map map value type
 //
 // toMapFunc: the to map function
-func ToMapThenMap[E any, K, KK comparable, V, VV any](es []E, toMapFunc func(e E) (K, V), mapFunc func(k K, v V) (KK, VV)) map[KK]VV {
+func ToMapThenMap[T any, K, KK comparable, V, VV any](ts []T, toMapFunc func(t T) (K, V), mapFunc func(k K, v V) (KK, VV)) map[KK]VV {
 	m := make(map[KK]VV, 0)
-	for _, e := range es {
-		k, v := toMapFunc(e)
+	for _, t := range ts {
+		k, v := toMapFunc(t)
 		kk, vv := mapFunc(k, v)
 		m[kk] = vv
 	}
@@ -54,7 +54,7 @@ func ToMapThenMap[E any, K, KK comparable, V, VV any](es []E, toMapFunc func(e E
 
 // ToMap2 function
 //
-// E: element type
+// T: element type
 //
 // K1: the map1 key type
 //
@@ -67,12 +67,12 @@ func ToMapThenMap[E any, K, KK comparable, V, VV any](es []E, toMapFunc func(e E
 // toMapFunc1: the to map1 function
 //
 // toMapFunc2: the to map2 function
-func ToMap2[E any, K1, K2 comparable, V1, V2 any](es []E, toMapFunc1 func(e E) (K1, V1), toMapFunc2 func(e E) (K2, V2)) (map[K1]V1, map[K2]V2) {
+func ToMap2[T any, K1, K2 comparable, V1, V2 any](ts []T, toMapFunc1 func(t T) (K1, V1), toMapFunc2 func(t T) (K2, V2)) (map[K1]V1, map[K2]V2) {
 	m1 := make(map[K1]V1, 0)
 	m2 := make(map[K2]V2, 0)
-	for _, e := range es {
-		k1, v1 := toMapFunc1(e)
-		k2, v2 := toMapFunc2(e)
+	for _, t := range ts {
+		k1, v1 := toMapFunc1(t)
+		k2, v2 := toMapFunc2(t)
 		m1[k1] = v1
 		m2[k2] = v2
 	}
@@ -81,7 +81,7 @@ func ToMap2[E any, K1, K2 comparable, V1, V2 any](es []E, toMapFunc1 func(e E) (
 
 // ToMap3 function
 //
-// E: element type
+// T: element type
 //
 // K1: the map1 key type
 //
@@ -100,17 +100,84 @@ func ToMap2[E any, K1, K2 comparable, V1, V2 any](es []E, toMapFunc1 func(e E) (
 // toMapFunc2: the to map2 function
 //
 // toMapFunc3: the to map3 function
-func ToMap3[E any, K1, K2, K3 comparable, V1, V2, V3 any](es []E, toMapFunc1 func(e E) (K1, V1), toMapFunc2 func(e E) (K2, V2), toMapFunc3 func(e E) (K3, V3)) (map[K1]V1, map[K2]V2, map[K3]V3) {
+func ToMap3[T any, K1, K2, K3 comparable, V1, V2, V3 any](ts []T, toMapFunc1 func(t T) (K1, V1), toMapFunc2 func(t T) (K2, V2), toMapFunc3 func(t T) (K3, V3)) (map[K1]V1, map[K2]V2, map[K3]V3) {
 	m1 := make(map[K1]V1, 0)
 	m2 := make(map[K2]V2, 0)
 	m3 := make(map[K3]V3, 0)
-	for _, e := range es {
-		k1, v1 := toMapFunc1(e)
-		k2, v2 := toMapFunc2(e)
-		k3, v3 := toMapFunc3(e)
+	for _, t := range ts {
+		k1, v1 := toMapFunc1(t)
+		k2, v2 := toMapFunc2(t)
+		k3, v3 := toMapFunc3(t)
 		m1[k1] = v1
 		m2[k2] = v2
 		m3[k3] = v3
 	}
 	return m1, m2, m3
+}
+
+// MapToMap function
+//
+// KI: input key type
+//
+// KO: output key type
+//
+// VI: input value type
+//
+// VO: output value type
+//
+// mapFunc: the map function
+func MapToMap[KI, KO comparable, VI, VO any](m map[KI]VI, toMapFunc func(ki KI, vi VI) (KO, VO)) map[KO]VO {
+	om := make(map[KO]VO, 0)
+	for k, v := range m {
+		ko, vo := toMapFunc(k, v)
+		om[ko] = vo
+	}
+	return om
+}
+
+// MapToMapThenFilter function
+//
+// KI: input key type
+//
+// KO: output key type
+//
+// VI: input value type
+//
+// VO: output value type
+//
+// mapFunc: the map function
+//
+// filterFunc: the filter function
+func MapToMapThenFilter[KI, KO comparable, VI, VO any](m map[KI]VI, toMapFunc func(ki KI, vi VI) (KO, VO), filterFunc func(KO, VO) bool) map[KO]VO {
+	om := make(map[KO]VO, 0)
+	for k, v := range m {
+		if ko, vo := toMapFunc(k, v); filterFunc(ko, vo) {
+			om[ko] = vo
+		}
+	}
+	return om
+}
+
+// MapToMapThenReduce function
+//
+// KI: input key type
+//
+// KO: output key type
+//
+// VI: input value type
+//
+// VO: output value type
+//
+// R: result type
+//
+// mapFunc: the map function
+//
+// reduceFunc: the reduce function
+func MapToMapThenReduce[KI, KO comparable, VI, VO, R any](m map[KI]VI, toMapFunc func(ki KI, vi VI) (KO, VO), r R, reduceFunc func(k KO, v VO, sum *R)) R {
+	om := make(map[KO]VO, 0)
+	for k, v := range m {
+		ko, vo := toMapFunc(k, v)
+		om[ko] = vo
+	}
+	return ReduceMap(om, r, reduceFunc)
 }

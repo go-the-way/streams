@@ -20,18 +20,18 @@ func TestForEach(t *testing.T) {
 	arr := []int{0, 1, 2}
 	expect := []int{1, 2, 3}
 	newArr := make([]int, 0)
-	ForEach(arr, func(_, e int) { newArr = append(newArr, e+1) })
+	ForEach(arr, func(_, t int) { newArr = append(newArr, t+1) })
 	if !reflect.DeepEqual(newArr, expect) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }
 
 func TestForEachPtr(t *testing.T) {
 	arr := []int{0, 1, 2}
 	expect := []int{1, 2, 3}
-	ForEachPtr(arr, func(_ int, e *int) { *e += 1 })
+	ForEachPtr(arr, func(_ int, t *int) { *t += 1 })
 	if !reflect.DeepEqual(arr, expect) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }
 
@@ -40,6 +40,6 @@ func TestMapEach(t *testing.T) {
 	expect := map[string]int{"a": 2, "b": 3}
 	MapEach(m, func(k string, v int) { m[k] = v + 1 })
 	if !reflect.DeepEqual(m, expect) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }

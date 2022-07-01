@@ -13,14 +13,14 @@ package streams
 
 // Filter function
 //
-// E: element type
+// T: element type
 //
 // filterFunc: the filter function
-func Filter[E any](es []E, filterFunc func(e E) bool) []E {
-	nEs := make([]E, 0)
-	for _, e := range es {
-		if filterFunc(e) {
-			nEs = append(nEs, e)
+func Filter[T any](ts []T, filterFunc func(t T) bool) []T {
+	nEs := make([]T, 0)
+	for _, t := range ts {
+		if filterFunc(t) {
+			nEs = append(nEs, t)
 		}
 	}
 	return nEs
@@ -28,16 +28,16 @@ func Filter[E any](es []E, filterFunc func(e E) bool) []E {
 
 // FilterThenMap function
 //
-// E: element type
+// T: element type
 //
 // R: result type
 //
 // filterFunc: the filter function
-func FilterThenMap[E, R any](es []E, filterFunc func(e E) bool, mapFunc func(e E) R) []R {
+func FilterThenMap[T, R any](ts []T, filterFunc func(t T) bool, mapFunc func(t T) R) []R {
 	rs := make([]R, 0)
-	for _, e := range es {
-		if filterFunc(e) {
-			rs = append(rs, mapFunc(e))
+	for _, t := range ts {
+		if filterFunc(t) {
+			rs = append(rs, mapFunc(t))
 		}
 	}
 	return rs
@@ -45,18 +45,18 @@ func FilterThenMap[E, R any](es []E, filterFunc func(e E) bool, mapFunc func(e E
 
 // FilterThenToMap function
 //
-// E: element type
+// T: element type
 //
 // K: map key type
 //
 // V: map value type
 //
 // filterFunc: the filter function
-func FilterThenToMap[E any, K comparable, V any](es []E, filterFunc func(e E) bool, toMapFunc func(e E) (K, V)) map[K]V {
+func FilterThenToMap[T any, K comparable, V any](ts []T, filterFunc func(t T) bool, toMapFunc func(t T) (K, V)) map[K]V {
 	m := make(map[K]V, 0)
-	for _, e := range es {
-		if filterFunc(e) {
-			k, v := toMapFunc(e)
+	for _, t := range ts {
+		if filterFunc(t) {
+			k, v := toMapFunc(t)
 			m[k] = v
 		}
 	}

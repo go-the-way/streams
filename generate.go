@@ -13,16 +13,16 @@ package streams
 
 // Generate function
 //
-// E: element type
+// T: element type
 //
 // genFunc: the generate function
-func Generate[E any](start, end int, genFunc func(index, step int) E) []E {
+func Generate[T any](start, end int, genFunc func(index, step int) T) []T {
 	length := end - start + 1
-	es := make([]E, length, length)
+	ts := make([]T, length, length)
 	index := 0
 	for i := start; i <= end; i++ {
-		es[index] = genFunc(index, i)
+		ts[index] = genFunc(index, i)
 		index++
 	}
-	return es
+	return ts
 }

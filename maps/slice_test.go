@@ -40,7 +40,7 @@ func TestSlice(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			if tc.val != tc.expect {
-				t.Error("test failed")
+				t.Error("test failed!")
 			}
 		})
 	}

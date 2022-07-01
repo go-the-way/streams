@@ -22,14 +22,14 @@ var (
 	Uint16      = func(e uint16, sum *uint16) { *sum += e }                       // Uint16 reduce
 	Uint32      = func(e uint32, sum *uint32) { *sum += e }                       // Uint32 reduce
 	Uint64      = func(e uint64, sum *uint64) { *sum += e }                       // Uint64 reduce
-	SliceInt    = func(es []int, sum *[]int) { *sum = append(*sum, es...) }       // SliceInt reduce
-	SliceInt8   = func(es []int8, sum *[]int8) { *sum = append(*sum, es...) }     // SliceInt8 reduce
-	SliceInt16  = func(es []int16, sum *[]int16) { *sum = append(*sum, es...) }   // SliceInt16 reduce
-	SliceInt32  = func(es []int32, sum *[]int32) { *sum = append(*sum, es...) }   // SliceInt32 reduce
-	SliceInt64  = func(es []int64, sum *[]int64) { *sum = append(*sum, es...) }   // SliceInt64 reduce
-	SliceUint   = func(es []uint, sum *[]uint) { *sum = append(*sum, es...) }     // SliceUint reduce
-	SliceUint8  = func(es []uint8, sum *[]uint8) { *sum = append(*sum, es...) }   // SliceUint8 reduce
-	SliceUint16 = func(es []uint16, sum *[]uint16) { *sum = append(*sum, es...) } // SliceUint16 reduce
-	SliceUint32 = func(es []uint32, sum *[]uint32) { *sum = append(*sum, es...) } // SliceUint32 reduce
-	SliceUint64 = func(es []uint64, sum *[]uint64) { *sum = append(*sum, es...) } // SliceUint64 reduce
+	SliceInt    = func(ts []int, sum *[]int) { *sum = append(*sum, ts...) }       // SliceInt reduce
+	SliceInt8   = func(ts []int8, sum *[]int8) { *sum = append(*sum, ts...) }     // SliceInt8 reduce
+	SliceInt16  = func(ts []int16, sum *[]int16) { *sum = append(*sum, ts...) }   // SliceInt16 reduce
+	SliceInt32  = func(ts []int32, sum *[]int32) { *sum = append(*sum, ts...) }   // SliceInt32 reduce
+	SliceInt64  = func(ts []int64, sum *[]int64) { *sum = append(*sum, ts...) }   // SliceInt64 reduce
+	SliceUint   = func(ts []uint, sum *[]uint) { *sum = append(*sum, ts...) }     // SliceUint reduce
+	SliceUint8  = func(ts []uint8, sum *[]uint8) { *sum = append(*sum, ts...) }   // SliceUint8 reduce
+	SliceUint16 = func(ts []uint16, sum *[]uint16) { *sum = append(*sum, ts...) } // SliceUint16 reduce
+	SliceUint32 = func(ts []uint32, sum *[]uint32) { *sum = append(*sum, ts...) } // SliceUint32 reduce
+	SliceUint64 = func(ts []uint64, sum *[]uint64) { *sum = append(*sum, ts...) } // SliceUint64 reduce
 )

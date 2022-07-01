@@ -21,18 +21,18 @@ func TestForEachConcurrent(t *testing.T) {
 	arr := []int{0, 1, 2}
 	val := int32(0)
 	expect := int32(6)
-	ForEachConcurrent(arr, func(_, e int) { atomic.AddInt32(&val, int32(e+1)) })
+	ForEachConcurrent(arr, func(_, t int) { atomic.AddInt32(&val, int32(t+1)) })
 	if !reflect.DeepEqual(val, expect) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }
 
 func TestForEachPtrConcurrent(t *testing.T) {
 	arr := []int{0, 1, 2}
 	expect := []int{1, 2, 3}
-	ForEachPtrConcurrent(arr, func(_ int, e *int) { *e += 1 })
+	ForEachPtrConcurrent(arr, func(_ int, t *int) { *t += 1 })
 	if !reflect.DeepEqual(arr, expect) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }
 
@@ -41,6 +41,6 @@ func TestMapEachConcurrent(t *testing.T) {
 	expect := map[string]int{"a": 2, "b": 3}
 	MapEachConcurrent(m, func(k string, v int) { m[k] = v + 1 })
 	if !reflect.DeepEqual(m, expect) {
-		t.Error("test failed")
+		t.Error("test failed!")
 	}
 }

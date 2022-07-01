@@ -13,5 +13,5 @@ package reduces
 
 var (
 	String      = func(e string, sum *string) { *sum += e }                       // String reduce
-	SliceString = func(es []string, sum *[]string) { *sum = append(*sum, es...) } // SliceString reduce
+	SliceString = func(ts []string, sum *[]string) { *sum = append(*sum, ts...) } // SliceString reduce
 )

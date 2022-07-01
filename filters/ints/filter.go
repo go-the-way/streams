@@ -13,57 +13,57 @@ package ints
 
 var (
 	// Even filter
-	// true if e % 2 == 0
+	// true if v % 2 == 0
 	// false else
-	Even = func(e int) bool { return e%2 == 0 }
+	Even = func(v int) bool { return v%2 == 0 }
 	// Odd filter
-	// true if e % 2 != 0
+	// true if v % 2 != 0
 	// false else
-	Odd = func(e int) bool { return !Even(e) }
+	Odd = func(v int) bool { return !Even(v) }
 
 	// Eq filter
-	// true if e == eq
+	// true if v == eq
 	// false else
-	Eq = func(eq int) func(e int) bool { return func(e int) bool { return e == eq } }
+	Eq = func(eq int) func(v int) bool { return func(v int) bool { return v == eq } }
 	// Gt filter
-	// true if e > gt
+	// true if v > gt
 	// false else
-	Gt = func(gt int) func(e int) bool { return func(e int) bool { return e > gt } }
+	Gt = func(gt int) func(v int) bool { return func(v int) bool { return v > gt } }
 	// GtEq filter
-	// true if e >= gtEq
+	// true if v >= gtEq
 	// false else
-	GtEq = func(gtEq int) func(e int) bool { return func(e int) bool { return e >= gtEq } }
+	GtEq = func(gtEq int) func(v int) bool { return func(v int) bool { return v >= gtEq } }
 	// Lt filter
-	// true if e < lt
+	// true if v < lt
 	// false else
-	Lt = func(lt int) func(e int) bool { return func(e int) bool { return e < lt } }
+	Lt = func(lt int) func(v int) bool { return func(v int) bool { return v < lt } }
 	// LtEq filter
-	// true if e <= ltEq
+	// true if v <= ltEq
 	// false else
-	LtEq = func(ltEq int) func(e int) bool { return func(e int) bool { return e <= ltEq } }
+	LtEq = func(ltEq int) func(v int) bool { return func(v int) bool { return v <= ltEq } }
 
 	// Eq0 filter
-	// true if e == 0
+	// true if v == 0
 	// false else
-	Eq0 = func(e int) bool { return Eq(0)(e) }
+	Eq0 = func(v int) bool { return Eq(0)(v) }
 	// NotEq0 filter
-	// true if e != 0
+	// true if v != 0
 	// false else
-	NotEq0 = func(e int) bool { return !Eq0(e) }
+	NotEq0 = func(v int) bool { return !Eq0(v) }
 	// Gt0 filter
-	// true if e > 0
+	// true if v > 0
 	// false else
-	Gt0 = func(e int) bool { return Gt(0)(e) }
+	Gt0 = func(v int) bool { return Gt(0)(v) }
 	// GtEq0 filter
-	// true if e >= 0
+	// true if v >= 0
 	// false else
-	GtEq0 = func(e int) bool { return GtEq(0)(e) }
+	GtEq0 = func(v int) bool { return GtEq(0)(v) }
 	// Lt0 filter
-	// true if e < 0
+	// true if v < 0
 	// false else
-	Lt0 = func(e int) bool { return Lt(0)(e) }
+	Lt0 = func(v int) bool { return Lt(0)(v) }
 	// LtEq0 filter
-	// true if e <= 0
+	// true if v <= 0
 	// false else
-	LtEq0 = func(e int) bool { return LtEq(0)(e) }
+	LtEq0 = func(v int) bool { return LtEq(0)(v) }
 )
