@@ -46,3 +46,19 @@ func (m Map[K, V]) Iterate(f func(k K, v V)) {
 		f(k, v)
 	}
 }
+
+func MapKeys[K comparable, V any](m map[K]V) []K {
+	ks := make([]K, 0)
+	for k := range m {
+		ks = append(ks, k)
+	}
+	return ks
+}
+
+func MapValues[K comparable, V any](m map[K]V) []V {
+	vs := make([]V, 0)
+	for _, v := range m {
+		vs = append(vs, v)
+	}
+	return vs
+}

@@ -60,14 +60,14 @@ func TestGroupByThenMap(t *testing.T) {
 	for _, tc := range []struct {
 		name   string
 		f      func(e *groupByThenMap) (string, string)
-		mf     func(str []string) string
+		mf     func(s string, str []string) (string, string)
 		expect any
 	}{
-		{"ByID", func(e *groupByThenMap) (string, string) { return e.id, e.name }, func(str []string) string { return strings.Join(str, "") }, map[string]string{"10": "AppleBananaPear", "20": "Pear", "30": "Banana"}},
-		{"ByName", func(e *groupByThenMap) (string, string) { return e.name, e.id }, func(str []string) string { return strings.Join(str, "") }, map[string]string{"Apple": "10", "Banana": "1030", "Pear": "1020"}},
+		{"ByID", func(e *groupByThenMap) (string, string) { return e.id, e.name }, func(s string, str []string) (string, string) { return s, strings.Join(str, "") }, map[string]string{"10": "AppleBananaPear", "20": "Pear", "30": "Banana"}},
+		{"ByName", func(e *groupByThenMap) (string, string) { return e.name, e.id }, func(s string, str []string) (string, string) { return s, strings.Join(str, "") }, map[string]string{"Apple": "10", "Banana": "1030", "Pear": "1020"}},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if fArr := GroupByThenMap(gbs, tc.f, tc.mf); !reflect.DeepEqual(fArr, tc.expect) {
+			if fArr := GroupByThenToMap(gbs, tc.f, tc.mf); !reflect.DeepEqual(fArr, tc.expect) {
 				t.Error("test failed!")
 			}
 		})

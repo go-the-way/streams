@@ -25,7 +25,7 @@ Basic Stream API written in Go.(Only supports Go1.18+)
 - MapEachConcurrent
 - Generate
 - GroupBy
-- GroupByThenMap
+- GroupByThenToMap
 - Map
 - MapThenFilter
 - MapThenReduce

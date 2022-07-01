@@ -21,7 +21,7 @@ package streams
 //
 // groupByFunc: the group by function
 func GroupBy[T any, K comparable, V any](ts []T, groupByFunc func(t T) (K, V)) map[K][]V {
-	m := make(map[K][]V)
+	m := make(map[K][]V, 0)
 	ForEach(ts, func(_ int, t T) {
 		k, v := groupByFunc(t)
 		if vs, have := m[k]; have {
@@ -34,7 +34,7 @@ func GroupBy[T any, K comparable, V any](ts []T, groupByFunc func(t T) (K, V)) m
 	return m
 }
 
-// GroupByThenMap function
+// GroupByThenToMap function
 //
 // T: element type
 //
@@ -42,10 +42,16 @@ func GroupBy[T any, K comparable, V any](ts []T, groupByFunc func(t T) (K, V)) m
 //
 // V: the map value type
 //
+// KR: the result key type
+//
+// VR: the result value type
+//
 // groupByFunc: the group by function
-func GroupByThenMap[T any, K comparable, V, VV any](ts []T, groupByFunc func(t T) (K, V), mapFunc func(vs []V) VV) map[K]VV {
-	m := make(map[K][]V)
-	mm := make(map[K]VV)
+//
+// toMapFunc: the toMap function
+func GroupByThenToMap[T any, K comparable, V, KR comparable, VR any](ts []T, groupByFunc func(t T) (K, V), toMapFunc func(k K, vs []V) (KR, VR)) map[KR]VR {
+	m := make(map[K][]V, 0)
+	rm := make(map[KR]VR, 0)
 	ForEach(ts, func(_ int, t T) {
 		k, v := groupByFunc(t)
 		if vs, have := m[k]; have {
@@ -55,8 +61,9 @@ func GroupByThenMap[T any, K comparable, V, VV any](ts []T, groupByFunc func(t T
 			m[k] = []V{v}
 		}
 	})
-	MapEach(m, func(k K, v []V) {
-		mm[k] = mapFunc(v)
+	MapEach(m, func(k K, vs []V) {
+		kr, vr := toMapFunc(k, vs)
+		rm[kr] = vr
 	})
-	return mm
+	return rm
 }

@@ -13,6 +13,7 @@ package types
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 )
 
@@ -44,6 +45,22 @@ func TestMap(t *testing.T) {
 	})
 
 	if str != "hello10" {
+		t.Fatal("test failed!")
+	}
+}
+
+func TestMapKeys(t *testing.T) {
+	m := map[int]string{1: "1", 2: "2"}
+	expect := []int{1, 2}
+	if ks := MapKeys(m); !reflect.DeepEqual(ks, expect) {
+		t.Fatal("test failed!")
+	}
+}
+
+func TestMapValues(t *testing.T) {
+	m := map[int]string{1: "1", 2: "2"}
+	expect := []string{"1", "2"}
+	if vs := MapValues(m); !reflect.DeepEqual(vs, expect) {
 		t.Fatal("test failed!")
 	}
 }
