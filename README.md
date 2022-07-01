@@ -17,6 +17,8 @@ Basic Stream API written in Go.(Only supports Go1.18+)
 - Filter
 - FilterThenMap
 - FilterThenToMap
+- FilterThenGroupBy
+- FilterThenReduce
 - ForEach
 - ForEachPtr
 - MapEach

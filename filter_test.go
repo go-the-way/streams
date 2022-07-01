@@ -12,6 +12,7 @@
 package streams
 
 import (
+	"github.com/go-the-way/streams/reduces"
 	"reflect"
 	"testing"
 )
@@ -80,6 +81,64 @@ func TestFilterThenToMap(t *testing.T) {
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			if fArr := FilterThenToMap(arr, tc.f, tc.mf); !reflect.DeepEqual(fArr, tc.expect) {
+				t.Error("test failed!")
+			}
+		})
+	}
+}
+
+func TestFilterThenGroupBy(t *testing.T) {
+	mF := func(e int) (int, int) { return e, e }
+	arr := []int{0, 1, 2, 3, 4}
+	for _, tc := range []struct {
+		name   string
+		f      func(e int) bool
+		gpf    func(e int) (int, int)
+		expect map[int][]int
+	}{
+		{"Gt0", func(e int) bool { return e > 0 }, mF, map[int][]int{1: {1}, 2: {2}, 3: {3}, 4: {4}}},
+		{"GtEq0", func(e int) bool { return e >= 0 }, mF, map[int][]int{0: {0}, 1: {1}, 2: {2}, 3: {3}, 4: {4}}},
+		{"Lt0", func(e int) bool { return e < 0 }, mF, map[int][]int{}},
+		{"LtEq0", func(e int) bool { return e <= 0 }, mF, map[int][]int{0: {0}}},
+		{"Even", func(e int) bool { return e%2 == 0 }, mF, map[int][]int{0: {0}, 2: {2}, 4: {4}}},
+		{"Odd", func(e int) bool { return e%2 != 0 }, mF, map[int][]int{1: {1}, 3: {3}}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if fArr := FilterThenGroupBy(arr, tc.f, tc.gpf); !reflect.DeepEqual(fArr, tc.expect) {
+				t.Error("test failed!")
+			}
+		})
+	}
+}
+
+func TestFilterThenGroupBy2(t *testing.T) {
+	type st struct {
+		id1, id2 int
+	}
+	mF := func(s st) (int, int) { return s.id1, s.id2 }
+	arr := []st{{1, 1}, {1, 2}, {2, 2}, {3, 3}}
+	expect := map[int][]int{1: {1, 2}, 2: {2}, 3: {3}}
+	if fArr := FilterThenGroupBy(arr, func(t st) bool { return true }, mF); !reflect.DeepEqual(fArr, expect) {
+		t.Error("test failed!")
+	}
+}
+
+func TestFilterThenReduce(t *testing.T) {
+	arr := []int{0, 1, 2, 3, 4}
+	for _, tc := range []struct {
+		name   string
+		f      func(e int) bool
+		expect int
+	}{
+		{"Gt0", func(e int) bool { return e > 0 }, 10},
+		{"GtEq0", func(e int) bool { return e >= 0 }, 10},
+		{"Lt0", func(e int) bool { return e < 0 }, 0},
+		{"LtEq0", func(e int) bool { return e <= 0 }, 0},
+		{"Even", func(e int) bool { return e%2 == 0 }, 6},
+		{"Odd", func(e int) bool { return e%2 != 0 }, 4},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if fArr := FilterThenReduce(arr, tc.f, 0, reduces.Int); !reflect.DeepEqual(fArr, tc.expect) {
 				t.Error("test failed!")
 			}
 		})

@@ -62,3 +62,49 @@ func FilterThenToMap[T any, K comparable, V any](ts []T, filterFunc func(t T) bo
 	}
 	return m
 }
+
+// FilterThenGroupBy function
+//
+// T: element type
+//
+// K: map key type
+//
+// V: map value type
+//
+// filterFunc: the filter function
+//
+// groupByFunc: the groupBy function
+func FilterThenGroupBy[T any, K comparable, V any](ts []T, filterFunc func(t T) bool, groupByFunc func(t T) (K, V)) map[K][]V {
+	m := make(map[K][]V, 0)
+	for _, t := range ts {
+		if filterFunc(t) {
+			k, v := groupByFunc(t)
+			if vs, have := m[k]; have {
+				vs = append(vs, v)
+				m[k] = vs
+			} else {
+				m[k] = []V{v}
+			}
+		}
+	}
+	return m
+}
+
+// FilterThenReduce function
+//
+// T: element type
+//
+// R: reduce type
+//
+// filterFunc: the filter function
+//
+// reduceFunc: the reduce function
+func FilterThenReduce[T any, R any](ts []T, filterFunc func(t T) bool, r R, reduceFunc func(t T, sum *R)) R {
+	nTs := make([]T, 0)
+	for _, t := range ts {
+		if filterFunc(t) {
+			nTs = append(nTs, t)
+		}
+	}
+	return Reduce(nTs, r, reduceFunc)
+}
