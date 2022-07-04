@@ -70,10 +70,10 @@ func SwitchCase[SW any](sw SW, defaultFunc func(), caseFunc ...func() (SW, func(
 //
 // T: the val type
 //
-// defaultFunc: the default function
+// defaultT: the default T
 //
 // caseFunc: the case function
-func SwitchCaseV[SW any, T any](sw SW, defaultFunc func() T, caseFunc ...func() (SW, T)) T {
+func SwitchCaseV[SW any, T any](sw SW, defaultT T, caseFunc ...func() (SW, T)) T {
 	if caseFunc != nil && len(caseFunc) > 0 {
 		for _, cF := range caseFunc {
 			if cfw, cfT := cF(); reflect.DeepEqual(sw, cfw) {
@@ -81,5 +81,5 @@ func SwitchCaseV[SW any, T any](sw SW, defaultFunc func() T, caseFunc ...func() 
 			}
 		}
 	}
-	return defaultFunc()
+	return defaultT
 }

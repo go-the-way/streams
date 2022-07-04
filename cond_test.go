@@ -110,7 +110,7 @@ func TestSwitchCaseV(t *testing.T) {
 		{"CaseV3", 3, func() (int, string) { return 1, "1" }, func() (int, string) { return 2, "2" }, func() (int, string) { return 3, "3" }, "3"},
 	} {
 		t.Run(tc.testName, func(t *testing.T) {
-			val := SwitchCaseV(tc.sw, func() string { return "0" }, tc.case1F, tc.case2F, tc.case3F)
+			val := SwitchCaseV(tc.sw, "0", tc.case1F, tc.case2F, tc.case3F)
 			if !reflect.DeepEqual(val, tc.except) {
 				t.Error("test failed!")
 			}
