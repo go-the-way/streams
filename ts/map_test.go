@@ -52,7 +52,8 @@ func TestMap(t *testing.T) {
 func TestMapKeys(t *testing.T) {
 	m := NewMapValue2[int, string](1, 2, "1", "2")
 	expect := []int{1, 2}
-	if ks := m.Keys(); !reflect.DeepEqual(ks, expect) {
+	expect2 := []int{2, 1}
+	if ks := m.Keys(); !(reflect.DeepEqual(ks, expect) || reflect.DeepEqual(ks, expect2)) {
 		t.Fatal("test failed!")
 	}
 }

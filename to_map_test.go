@@ -111,9 +111,10 @@ func TestMapToMapThenFilter(t *testing.T) {
 
 func TestMapToMapThenReduce(t *testing.T) {
 	rF := func(k string, v int, sum *string) { *sum += fmt.Sprintf("%s%d", k, v) }
-	m := map[string]int{"1": 1, "2": 2}
-	expect := "1223"
-	if a := MapToMapThenReduce(m, func(k string, v int) (string, int) { return k, v + 1 }, "", rF); !reflect.DeepEqual(a, expect) {
+	m := map[string]int{"1": 1}
+	expect := "12"
+	a := MapToMapThenReduce(m, func(k string, v int) (string, int) { return k, v + 1 }, "", rF)
+	if !reflect.DeepEqual(a, expect) {
 		t.Error("test failed!")
 	}
 }
