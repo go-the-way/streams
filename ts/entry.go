@@ -9,28 +9,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package types
+package ts
 
-// Set define
-type Set[E comparable] map[E]struct{}
-
-// MakeSet make set instance
-func MakeSet[E comparable]() Set[E] {
-	return Set[E]{}
+type Entry[K comparable, V any] struct {
+	K K
+	V V
 }
 
-// Add an element
-func (s Set[E]) Add(element E) Set[E] { s[element] = struct{}{}; return s }
+func NewEntry[K comparable, V any](k K, v V) *Entry[K, V] { return &Entry[K, V]{k, v} }
 
-// Delete element
-func (s Set[E]) Delete(element E) Set[E] { delete(s, element); return s }
-
-// Contains element
-func (s Set[E]) Contains(element E) bool { _, have := s[element]; return have }
-
-// Iterate element
-func (s Set[E]) Iterate(f func(element E)) {
-	for k := range s {
-		f(k)
+func MapToEntry[K comparable, V any](m map[K]V) []*Entry[K, V] {
+	ts := make([]*Entry[K, V], 0)
+	for k, v := range m {
+		ts = append(ts, NewEntry[K, V](k, v))
 	}
+	return ts
+}
+
+func EntryToMap[K comparable, V any](es []*Entry[K, V]) map[K]V {
+	m := make(map[K]V, 0)
+	for _, e := range es {
+		m[e.K] = e.V
+	}
+	return m
 }

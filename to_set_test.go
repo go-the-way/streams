@@ -12,7 +12,7 @@
 package streams
 
 import (
-	"github.com/go-the-way/streams/types"
+	"github.com/go-the-way/streams/ts"
 	"reflect"
 	"testing"
 )
@@ -23,7 +23,7 @@ func TestToSet(t *testing.T) {
 		name string
 	}
 	arr := []*toSet{{10, "Apple"}, {20, "Pear"}}
-	expect := types.MakeSet[int]().Add(10).Add(20)
+	expect := ts.NewSetValue(10, 20)
 	if m := ToSet(arr, func(e *toSet) int { return e.id }); !reflect.DeepEqual(m, expect) {
 		t.Error("test failed!")
 	}
@@ -47,7 +47,7 @@ func TestToSet2(t *testing.T) {
 		name string
 	}
 	arr := []*toSet{{10, "Apple"}, {20, "Pear"}}
-	expect1, expect2 := types.MakeSet[int]().Add(10).Add(20), types.MakeSet[string]().Add("Apple").Add("Pear")
+	expect1, expect2 := ts.NewSetValue(10, 20), ts.NewSetValue("Apple", "Pear")
 	if s1, s2 := ToSet2(arr, func(e *toSet) int { return e.id }, func(e *toSet) string { return e.name }); !reflect.DeepEqual(s1, expect1) || !reflect.DeepEqual(s2, expect2) {
 		t.Error("test failed!")
 	}
@@ -60,7 +60,7 @@ func TestToSet3(t *testing.T) {
 		age  int
 	}
 	arr := []*toSet{{10, "Apple", 11}, {20, "Pear", 21}}
-	expect1, expect2, expect3 := types.MakeSet[int]().Add(10).Add(20), types.MakeSet[string]().Add("Apple").Add("Pear"), types.MakeSet[int]().Add(11).Add(21)
+	expect1, expect2, expect3 := ts.NewSetValue(10, 20), ts.NewSetValue("Apple", "Pear"), ts.NewSetValue(11, 21)
 	if s1, s2, s3 := ToSet3(arr, func(e *toSet) int { return e.id }, func(e *toSet) string { return e.name }, func(e *toSet) int { return e.age }); !reflect.DeepEqual(s1, expect1) || !reflect.DeepEqual(s2, expect2) || !reflect.DeepEqual(s3, expect3) {
 		t.Error("test failed!")
 	}

@@ -9,58 +9,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package types
+package ts
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
 
-func TestMap(t *testing.T) {
-	mm := MakeMap[string, int]()
-	mm.Put("hello", 10)
-	mm.Put("world", 20)
-	mm.Delete("world")
-
-	if !mm.ContainsKey("hello") {
-		t.Fatal("test failed!")
-	}
-
-	if mm.ContainsKey("world") {
-		t.Fatal("test failed!")
-	}
-
-	if !mm.ContainsValue(10) {
-		t.Fatal("test failed!")
-	}
-
-	if mm.ContainsValue(20) {
-		t.Fatal("test failed!")
-	}
-
-	str := ""
-	mm.Iterate(func(k string, v int) {
-		str += fmt.Sprintf("%s%d", k, v)
-	})
-
-	if str != "hello10" {
+func TestNewEntry(t *testing.T) {
+	e1 := NewEntry(10, 20)
+	expect := &Entry[int, int]{10, 20}
+	if !reflect.DeepEqual(e1, expect) {
 		t.Fatal("test failed!")
 	}
 }
 
-func TestMapKeys(t *testing.T) {
+func TestMapToEntry(t *testing.T) {
 	m := map[int]string{1: "1", 2: "2"}
-	expect := []int{1, 2}
-	if ks := MapKeys(m); !reflect.DeepEqual(ks, expect) {
+	expect := []*Entry[int, string]{{1, "1"}, {2, "2"}}
+	if !reflect.DeepEqual(MapToEntry[int, string](m), expect) {
 		t.Fatal("test failed!")
 	}
 }
 
-func TestMapValues(t *testing.T) {
-	m := map[int]string{1: "1", 2: "2"}
-	expect := []string{"1", "2"}
-	if vs := MapValues(m); !reflect.DeepEqual(vs, expect) {
+func TestEntryToMap(t *testing.T) {
+	es := []*Entry[int, string]{{1, "1"}, {2, "2"}}
+	expect := map[int]string{1: "1", 2: "2"}
+	if !reflect.DeepEqual(EntryToMap[int, string](es), expect) {
 		t.Fatal("test failed!")
 	}
 }
