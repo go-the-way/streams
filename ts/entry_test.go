@@ -25,16 +25,16 @@ func TestNewEntry(t *testing.T) {
 }
 
 func TestMapToEntry(t *testing.T) {
-	m := map[int]string{1: "1", 2: "2"}
-	expect := []*Entry[int, string]{{1, "1"}, {2, "2"}}
+	m := map[int]string{1: "1"}
+	expect := []*Entry[int, string]{{1, "1"}}
 	if !reflect.DeepEqual(MapToEntry[int, string](m), expect) {
 		t.Fatal("test failed!")
 	}
 }
 
 func TestEntryToMap(t *testing.T) {
-	es := []*Entry[int, string]{{1, "1"}, {2, "2"}}
-	expect := map[int]string{1: "1", 2: "2"}
+	es := []*Entry[int, string]{{1, "1"}}
+	expect := map[int]string{1: "1"}
 	if !reflect.DeepEqual(EntryToMap[int, string](es), expect) {
 		t.Fatal("test failed!")
 	}
