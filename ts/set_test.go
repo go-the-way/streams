@@ -92,8 +92,8 @@ func TestSetReduce(t *testing.T) {
 }
 
 func TestSetList(t *testing.T) {
-	s := NewSetValue(1, 2)
-	if list := s.List(); !reflect.DeepEqual([]int{1, 2}, list) {
+	s := NewSetValue(1)
+	if list := s.List(); !reflect.DeepEqual([]int{1}, list) {
 		t.Error("test failed!")
 	}
 }
