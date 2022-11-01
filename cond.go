@@ -17,9 +17,13 @@ import "reflect"
 // cond ? trueFunc() : falseFunc()
 func Ternary(cond bool, trueFunc, falseFunc func()) {
 	if cond {
-		trueFunc()
+		if fn := trueFunc; fn != nil {
+			fn()
+		}
 	} else {
-		falseFunc()
+		if fn := falseFunc; fn != nil {
+			fn()
+		}
 	}
 }
 
@@ -33,11 +37,31 @@ func TernaryV[T any](cond bool, trueVal, falseVal T) T {
 	}
 }
 
+// If function
+func If(condFunc func() bool, ifFunc func()) {
+	if fn := condFunc; fn != nil {
+		if fn() {
+			if fn := ifFunc; fn != nil {
+				fn()
+			}
+		}
+	}
+}
+
+// IfV function
+func IfV(cond bool, ifFunc func()) {
+	if cond {
+		if fn := ifFunc; fn != nil {
+			fn()
+		}
+	}
+}
+
 // IfElse function
 func IfElse(condFunc ...func() (bool, func())) {
 	if condFunc != nil && len(condFunc) > 0 {
 		for _, cF := range condFunc {
-			if cfC, cfF := cF(); cfC {
+			if cfC, cfF := cF(); cfC && cfF != nil {
 				cfF()
 				return
 			}
@@ -55,13 +79,15 @@ func IfElse(condFunc ...func() (bool, func())) {
 func SwitchCase[SW any](sw SW, defaultFunc func(), caseFunc ...func() (SW, func())) {
 	if caseFunc != nil && len(caseFunc) > 0 {
 		for _, cF := range caseFunc {
-			if cfw, cfF := cF(); reflect.DeepEqual(sw, cfw) {
+			if cfw, cfF := cF(); reflect.DeepEqual(sw, cfw) && cfF != nil {
 				cfF()
 				return
 			}
 		}
 	}
-	defaultFunc()
+	if fn := defaultFunc; fn != nil {
+		fn()
+	}
 }
 
 // SwitchCaseV function

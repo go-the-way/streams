@@ -11,6 +11,8 @@ Basic Stream API written in Go.(Only supports Go1.18+)
 ## Functions
 - Ternary
 - TernaryV
+- If
+- IfV
 - IfElse
 - SwitchCase
 - SwitchCaseV

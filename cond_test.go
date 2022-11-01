@@ -75,6 +75,16 @@ func TestIfElse(t *testing.T) {
 	}
 }
 
+func TestIf(t *testing.T) {
+	If(func() bool { return true }, func() { t.Log("test ok!") })
+	If(func() bool { return false }, func() { t.Error("test failed!") })
+}
+
+func TestIfV(t *testing.T) {
+	IfV(true, func() { t.Log("test ok!") })
+	IfV(false, func() { t.Error("test failed!") })
+}
+
 func TestSwitchCase(t *testing.T) {
 	val := 0
 	for _, tc := range []struct {
