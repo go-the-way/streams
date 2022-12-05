@@ -26,6 +26,21 @@ func Filter[T any](ts []T, filterFunc func(t T) bool) []T {
 	return nEs
 }
 
+// FilterThenCount function
+//
+// T: element type
+//
+// filterFunc: the filter function
+func FilterThenCount[T any](ts []T, filterFunc func(t T) bool) int {
+	cc := 0
+	for _, t := range ts {
+		if filterFunc(t) {
+			cc++
+		}
+	}
+	return cc
+}
+
 // FilterThenMap function
 //
 // T: element type
