@@ -138,14 +138,12 @@ func GroupByCountingThenMap[T any, K comparable, R any](ts []T, groupByCountingF
 //
 // K: the map key type
 //
-// V: the map value type
-//
 // KR: the result key type
 //
 // VR: the result value type
 //
 // groupByCountingFunc: the group by function
-func GroupByCountingThenToMap[T any, K comparable, V, KR comparable, VR any](ts []T, groupByCountingFunc func(t T) K, toMapFunc func(k K, v int) (KR, VR)) map[KR]VR {
+func GroupByCountingThenToMap[T any, K comparable, KR comparable, VR any](ts []T, groupByCountingFunc func(t T) K, toMapFunc func(k K, v int) (KR, VR)) map[KR]VR {
 	m := make(map[K]int, 0)
 	ForEach(ts, func(_ int, t T) {
 		k := groupByCountingFunc(t)

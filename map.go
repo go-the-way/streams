@@ -64,6 +64,27 @@ func MapThenReduce[I, O, R any](ins []I, mapFunc func(in I) O, r R, reduceFunc f
 	return Reduce(os, r, reduceFunc)
 }
 
+// MapThenGroupBy function
+//
+// I: input element type
+//
+// O: output element type
+//
+// K: the map key type
+//
+// V: the map value type
+//
+// mapFunc: the map function
+//
+// groupBy: the group by function
+func MapThenGroupBy[I, O, K comparable, V any](ins []I, mapFunc func(in I) O, groupByFunc func(o O) (K, V)) map[K][]V {
+	os := make([]O, 0)
+	for _, in := range ins {
+		os = append(os, mapFunc(in))
+	}
+	return GroupBy(os, groupByFunc)
+}
+
 // MapMap function
 //
 // K: the map key type

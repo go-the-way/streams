@@ -39,6 +39,28 @@ func TestFilter(t *testing.T) {
 	}
 }
 
+func TestFilterThenCount(t *testing.T) {
+	arr := []int{0, 1, 2, 3, 4}
+	for _, tc := range []struct {
+		name   string
+		f      func(e int) bool
+		expect []int
+	}{
+		{"Gt0", func(e int) bool { return e > 0 }, []int{1, 2, 3, 4}},
+		{"GtEq0", func(e int) bool { return e >= 0 }, []int{0, 1, 2, 3, 4}},
+		{"Lt0", func(e int) bool { return e < 0 }, []int{}},
+		{"LtEq0", func(e int) bool { return e <= 0 }, []int{0}},
+		{"Even", func(e int) bool { return e%2 == 0 }, []int{0, 2, 4}},
+		{"Odd", func(e int) bool { return e%2 != 0 }, []int{1, 3}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if fArr := FilterThenCount(arr, tc.f); !reflect.DeepEqual(fArr, len(tc.expect)) {
+				t.Error("test failed!")
+			}
+		})
+	}
+}
+
 func TestFilterThenMap(t *testing.T) {
 	mF := func(e int) int { return e + 1 }
 	arr := []int{0, 1, 2, 3, 4}

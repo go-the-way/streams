@@ -51,6 +51,14 @@ func TestMapThenReduce(t *testing.T) {
 	}
 }
 
+func TestMapThenGroupBy(t *testing.T) {
+	arr := []int{1}
+	expect := map[string][]string{"1": {"1"}}
+	if a := MapThenGroupBy(arr, func(e int) string { return fmt.Sprintf("%d", e) }, func(str string) (string, string) { return str, str }); !reflect.DeepEqual(a, expect) {
+		t.Error("test failed!")
+	}
+}
+
 func TestMapMap(t *testing.T) {
 	m := map[int]string{1: "1"}
 	expect := []int{1}
