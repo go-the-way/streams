@@ -11,6 +11,8 @@
 
 package streams
 
+import "github.com/go-the-way/streams/ts"
+
 // Filter function
 //
 // T: element type
@@ -48,6 +50,8 @@ func FilterThenCount[T any](ts []T, filterFunc func(t T) bool) int {
 // R: result type
 //
 // filterFunc: the filter function
+//
+// mapFunc: the map function
 func FilterThenMap[T, R any](ts []T, filterFunc func(t T) bool, mapFunc func(t T) R) []R {
 	rs := make([]R, 0)
 	for _, t := range ts {
@@ -67,6 +71,8 @@ func FilterThenMap[T, R any](ts []T, filterFunc func(t T) bool, mapFunc func(t T
 // V: map value type
 //
 // filterFunc: the filter function
+//
+// toMapFunc: the toMap function
 func FilterThenToMap[T any, K comparable, V any](ts []T, filterFunc func(t T) bool, toMapFunc func(t T) (K, V)) map[K]V {
 	m := make(map[K]V, 0)
 	for _, t := range ts {
@@ -76,6 +82,25 @@ func FilterThenToMap[T any, K comparable, V any](ts []T, filterFunc func(t T) bo
 		}
 	}
 	return m
+}
+
+// FilterThenToSet function
+//
+// T: element type
+//
+// K: map key type
+//
+// filterFunc: the filter function
+//
+// toSetFunc: the toSet function
+func FilterThenToSet[T any, E comparable](tS []T, filterFunc func(t T) bool, toSetFunc func(t T) E) ts.Set[E] {
+	s := ts.NewSet[E]()
+	for _, t := range tS {
+		if filterFunc(t) {
+			s.Add(toSetFunc(t))
+		}
+	}
+	return s
 }
 
 // FilterThenGroupBy function

@@ -16,7 +16,7 @@ type Entry[K comparable, V any] struct {
 	V V
 }
 
-func NewEntry[K comparable, V any](k K, v V) *Entry[K, V] { return &Entry[K, V]{k, v} }
+func NewEntry[K comparable, V any](k K, v V) *Entry[K, V] { return &Entry[K, V]{K: k, V: v} }
 
 func MapToEntry[K comparable, V any](m map[K]V) []*Entry[K, V] {
 	ts := make([]*Entry[K, V], 0)

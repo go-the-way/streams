@@ -18,7 +18,7 @@ import (
 
 func TestNewEntry(t *testing.T) {
 	e1 := NewEntry(10, 20)
-	expect := &Entry[int, int]{10, 20}
+	expect := &Entry[int, int]{K: 10, V: 20}
 	if !reflect.DeepEqual(e1, expect) {
 		t.Fatal("test failed!")
 	}
