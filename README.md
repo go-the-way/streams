@@ -8,6 +8,45 @@ Basic Stream API written in Go.(Only supports Go1.18+)
 [![Go Report Card](https://goreportcard.com/badge/github.com/go-the-way/streams)](https://goreportcard.com/report/github.com/go-the-way/streams)
 [![GoDoc](https://pkg.go.dev/badge/github.com/go-the-way/streams?status.svg)](https://pkg.go.dev/github.com/go-the-way/streams?tab=doc)
 
+## Types
+
+### Entry
+- NewEntry
+- MapToEntry
+- EntryToMap
+
+#### Map
+- NewMap
+- NewMapValue
+- NewMapValue2
+- NewMapValue3
+- Len
+- Put
+- PutAll
+- Delete
+- Clear
+- ContainsKey
+- ContainsValue
+- Iterate
+- Keys
+- Values
+- KeyReduce
+- ValueReduce
+
+#### Set
+- NewSet
+- NewSetValue
+- Len
+- Add
+- AddAll
+- Delete
+- Clear
+- Contains
+- Iterate
+- Filter
+- Reduce
+- List
+
 ## Functions
 
 ### Condition Functions
@@ -27,6 +66,13 @@ Basic Stream API written in Go.(Only supports Go1.18+)
 - FilterThenGroupBy
 - FilterThenReduce
 - FilterThenToSet
+
+### Filter var Functions
+- filterfunc.Eq
+- filterfunc.Gt
+- filterfunc.GtEq
+- filterfunc.Lt
+- filterfunc.LtEq
 
 ### ForEach Functions
 - ForEach
@@ -56,9 +102,56 @@ Basic Stream API written in Go.(Only supports Go1.18+)
 - MapMapThenFilter
 - MapMapThenReduce
 
+### Map var Functions
+- mapfunc.Int2BinaryString
+- mapfunc.Int2OctalString
+- mapfunc.Int2String
+- mapfunc.Int2HexString
+- mapfunc.Int2Any
+- mapfunc.String2Bool
+- mapfunc.String2Int
+- mapfunc.String2Byte
+- mapfunc.String2Int8
+- mapfunc.String2Int16
+- mapfunc.String2Int32
+- mapfunc.String2Int64
+- mapfunc.String2UInt
+- mapfunc.String2UInt8
+- mapfunc.String2UInt16
+- mapfunc.String2UInt32
+- mapfunc.String2UInt64
+- mapfunc.String2Float32
+- mapfunc.String2Float64
+- mapfunc.String2Any
+
 ### Reduce Functions
 - Reduce
 - ReduceMap
+
+### Reduce var Functions
+- reducefunc.Number
+- reducefunc.NumberFunc
+- reducefunc.Slice
+- reducefunc.SliceFunc
+
+### Reduce val Functions
+- ReduceString
+- ReduceStringWithComma
+- ReduceStringWithDot
+- ReduceStringWithSpace
+- ReduceStringWithLine
+- ReduceInt8
+- ReduceInt16
+- ReduceInt32
+- ReduceInt
+- ReduceInt64
+- ReduceUint8
+- ReduceUint16
+- ReduceUint32
+- ReduceUint
+- ReduceUint64
+- ReduceFloat32
+- ReduceFloat64
 
 ### ToMap Functions
 - ToMap

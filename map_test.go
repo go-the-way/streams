@@ -13,7 +13,7 @@ package streams
 
 import (
 	"fmt"
-	"github.com/go-the-way/streams/reduces"
+	"github.com/go-the-way/streams/reducefunc"
 	"reflect"
 	"testing"
 )
@@ -46,7 +46,7 @@ func TestMapThenFilter(t *testing.T) {
 func TestMapThenReduce(t *testing.T) {
 	arr := []int{1, 2, 3}
 	expect := "123"
-	if a := MapThenReduce(arr, func(e int) string { return fmt.Sprintf("%d", e) }, "", reduces.String); !reflect.DeepEqual(a, expect) {
+	if a := MapThenReduce(arr, func(e int) string { return fmt.Sprintf("%d", e) }, "", func(r string, sum *string) { *sum += r }); !reflect.DeepEqual(a, expect) {
 		t.Error("test failed!")
 	}
 }
@@ -78,7 +78,7 @@ func TestMapMapThenFilter(t *testing.T) {
 func TestMapMapThenReduce(t *testing.T) {
 	m := map[int]string{1: "1", 2: "2"}
 	expect := 3
-	if val := MapMapThenReduce(m, func(k int, v string) int { return k }, 0, reduces.Int); !reflect.DeepEqual(val, expect) {
+	if val := MapMapThenReduce(m, func(k int, v string) int { return k }, 0, reducefunc.Number[int]); !reflect.DeepEqual(val, expect) {
 		t.Error("test failed!")
 	}
 }

@@ -11,8 +11,6 @@
 
 package streams
 
-import tts "github.com/go-the-way/streams/ts"
-
 // ToSet function
 //
 // T: element type
@@ -20,8 +18,8 @@ import tts "github.com/go-the-way/streams/ts"
 // R: result type
 //
 // toSetFunc: the to set function
-func ToSet[T any, R comparable](ts []T, toSetFunc func(e T) R) tts.Set[R] {
-	s := tts.NewSet[R]()
+func ToSet[T any, R comparable](ts []T, toSetFunc func(e T) R) Set[R] {
+	s := NewSet[R]()
 	for _, t := range ts {
 		s.Add(toSetFunc(t))
 	}
@@ -41,7 +39,7 @@ func ToSet[T any, R comparable](ts []T, toSetFunc func(e T) R) tts.Set[R] {
 // mapFunc: the map function
 func ToSetThenMap[T any, R comparable, RR any](ts []T, toSetFunc func(t T) R, mapFunc func(r R) RR) []RR {
 	rs := make([]RR, 0)
-	s := tts.NewSet[R]()
+	s := NewSet[R]()
 	for _, t := range ts {
 		s.Add(toSetFunc(t))
 	}
@@ -62,9 +60,9 @@ func ToSetThenMap[T any, R comparable, RR any](ts []T, toSetFunc func(t T) R, ma
 // toSetFunc1: the to set1 function
 //
 // toSetFunc2: the to set2 function
-func ToSet2[T any, R1, R2 comparable](ts []T, toSetFunc1 func(e T) R1, toSetFunc2 func(e T) R2) (tts.Set[R1], tts.Set[R2]) {
-	s1 := tts.NewSet[R1]()
-	s2 := tts.NewSet[R2]()
+func ToSet2[T any, R1, R2 comparable](ts []T, toSetFunc1 func(e T) R1, toSetFunc2 func(e T) R2) (Set[R1], Set[R2]) {
+	s1 := NewSet[R1]()
+	s2 := NewSet[R2]()
 	for _, t := range ts {
 		s1.Add(toSetFunc1(t))
 		s2.Add(toSetFunc2(t))
@@ -87,10 +85,10 @@ func ToSet2[T any, R1, R2 comparable](ts []T, toSetFunc1 func(e T) R1, toSetFunc
 // toSetFunc2: the to set2 function
 //
 // toSetFunc3: the to set3 function
-func ToSet3[T any, R1, R2, R3 comparable](ts []T, toSetFunc1 func(t T) R1, toSetFunc2 func(t T) R2, toSetFunc3 func(t T) R3) (tts.Set[R1], tts.Set[R2], tts.Set[R3]) {
-	s1 := tts.NewSet[R1]()
-	s2 := tts.NewSet[R2]()
-	s3 := tts.NewSet[R3]()
+func ToSet3[T any, R1, R2, R3 comparable](ts []T, toSetFunc1 func(t T) R1, toSetFunc2 func(t T) R2, toSetFunc3 func(t T) R3) (Set[R1], Set[R2], Set[R3]) {
+	s1 := NewSet[R1]()
+	s2 := NewSet[R2]()
+	s3 := NewSet[R3]()
 	for _, t := range ts {
 		s1.Add(toSetFunc1(t))
 		s2.Add(toSetFunc2(t))

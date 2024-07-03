@@ -13,8 +13,7 @@ package streams
 
 import (
 	"fmt"
-	"github.com/go-the-way/streams/reduces"
-	"github.com/go-the-way/streams/ts"
+	"github.com/go-the-way/streams/reducefunc"
 	"reflect"
 	"testing"
 )
@@ -120,12 +119,12 @@ func TestFilterThenToSet(t *testing.T) {
 		mf     func(e int) int
 		expect map[int]struct{}
 	}{
-		{"Gt0", func(e int) bool { return e > 0 }, mF, ts.NewSetValue[int](1, 2, 3, 4)},
-		{"GtEq0", func(e int) bool { return e >= 0 }, mF, ts.NewSetValue[int](0, 1, 2, 3, 4)},
-		{"Lt0", func(e int) bool { return e < 0 }, mF, ts.NewSet[int]()},
-		{"LtEq0", func(e int) bool { return e <= 0 }, mF, ts.NewSetValue[int](0)},
-		{"Even", func(e int) bool { return e%2 == 0 }, mF, ts.NewSetValue[int](0, 2, 4)},
-		{"Odd", func(e int) bool { return e%2 != 0 }, mF, ts.NewSetValue[int](1, 3)},
+		{"Gt0", func(e int) bool { return e > 0 }, mF, NewSetValue[int](1, 2, 3, 4)},
+		{"GtEq0", func(e int) bool { return e >= 0 }, mF, NewSetValue[int](0, 1, 2, 3, 4)},
+		{"Lt0", func(e int) bool { return e < 0 }, mF, NewSet[int]()},
+		{"LtEq0", func(e int) bool { return e <= 0 }, mF, NewSetValue[int](0)},
+		{"Even", func(e int) bool { return e%2 == 0 }, mF, NewSetValue[int](0, 2, 4)},
+		{"Odd", func(e int) bool { return e%2 != 0 }, mF, NewSetValue[int](1, 3)},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			if fArr := FilterThenToSet(arr, tc.f, tc.mf); fmt.Sprintf("%v", fArr) != fmt.Sprintf("%v", tc.expect) {
@@ -186,7 +185,7 @@ func TestFilterThenReduce(t *testing.T) {
 		{"Odd", func(e int) bool { return e%2 != 0 }, 4},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			if fArr := FilterThenReduce(arr, tc.f, 0, reduces.Int); !reflect.DeepEqual(fArr, tc.expect) {
+			if fArr := FilterThenReduce(arr, tc.f, 0, reducefunc.Number[int]); !reflect.DeepEqual(fArr, tc.expect) {
 				t.Error("test failed!")
 			}
 		})

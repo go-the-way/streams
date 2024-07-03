@@ -9,20 +9,38 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package streams
+package reducefunc
 
-// Generate function
-//
-// T: element type
-//
-// genFunc: the generate function
-func Generate[T any](start, end int, genFunc func(index, step int) T) []T {
-	length := end - start + 1
-	ts := make([]T, length)
-	index := 0
-	for i := start; i <= end; i++ {
-		ts[index] = genFunc(index, i)
-		index++
+import "testing"
+
+func TestNumber(t *testing.T) {
+	var num int
+	Number(1, &num)
+	if num != 1 {
+		t.Error("test failed!")
 	}
-	return ts
+}
+
+func TestNumberFunc(t *testing.T) {
+	var num int
+	NumberFunc[int]()(1, &num)
+	if num != 1 {
+		t.Error("test failed!")
+	}
+}
+
+func TestSlice(t *testing.T) {
+	var ns []int
+	Slice([]int{1}, &ns)
+	if ns[0] != 1 {
+		t.Error("test failed!")
+	}
+}
+
+func TestSliceFunc(t *testing.T) {
+	var ns []int
+	SliceFunc[int]()([]int{1}, &ns)
+	if ns[0] != 1 {
+		t.Error("test failed!")
+	}
 }

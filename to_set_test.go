@@ -12,7 +12,6 @@
 package streams
 
 import (
-	"github.com/go-the-way/streams/ts"
 	"reflect"
 	"testing"
 )
@@ -20,7 +19,7 @@ import (
 func TestToSet(t *testing.T) {
 	type toSet struct{ id int }
 	arr := []*toSet{{10}}
-	expect := ts.NewSetValue(10)
+	expect := NewSetValue(10)
 	if m := ToSet(arr, func(e *toSet) int { return e.id }); !reflect.DeepEqual(m, expect) {
 		t.Error("test failed!")
 	}
@@ -41,7 +40,7 @@ func TestToSet2(t *testing.T) {
 		name string
 	}
 	arr := []*toSet{{10, "Apple"}}
-	expect1, expect2 := ts.NewSetValue(10), ts.NewSetValue("Apple")
+	expect1, expect2 := NewSetValue(10), NewSetValue("Apple")
 	if s1, s2 := ToSet2(arr, func(e *toSet) int { return e.id }, func(e *toSet) string { return e.name }); !reflect.DeepEqual(s1, expect1) || !reflect.DeepEqual(s2, expect2) {
 		t.Error("test failed!")
 	}
@@ -54,7 +53,7 @@ func TestToSet3(t *testing.T) {
 		age  int
 	}
 	arr := []*toSet{{10, "Apple", 11}}
-	expect1, expect2, expect3 := ts.NewSetValue(10), ts.NewSetValue("Apple"), ts.NewSetValue(11)
+	expect1, expect2, expect3 := NewSetValue(10), NewSetValue("Apple"), NewSetValue(11)
 	if s1, s2, s3 := ToSet3(arr, func(e *toSet) int { return e.id }, func(e *toSet) string { return e.name }, func(e *toSet) int { return e.age }); !reflect.DeepEqual(s1, expect1) || !reflect.DeepEqual(s2, expect2) || !reflect.DeepEqual(s3, expect3) {
 		t.Error("test failed!")
 	}

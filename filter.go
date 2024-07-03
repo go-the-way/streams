@@ -11,8 +11,6 @@
 
 package streams
 
-import "github.com/go-the-way/streams/ts"
-
 // Filter function
 //
 // T: element type
@@ -74,7 +72,7 @@ func FilterThenMap[T, R any](ts []T, filterFunc func(t T) bool, mapFunc func(t T
 //
 // toMapFunc: the toMap function
 func FilterThenToMap[T any, K comparable, V any](ts []T, filterFunc func(t T) bool, toMapFunc func(t T) (K, V)) map[K]V {
-	m := make(map[K]V, 0)
+	m := make(map[K]V)
 	for _, t := range ts {
 		if filterFunc(t) {
 			k, v := toMapFunc(t)
@@ -93,8 +91,8 @@ func FilterThenToMap[T any, K comparable, V any](ts []T, filterFunc func(t T) bo
 // filterFunc: the filter function
 //
 // toSetFunc: the toSet function
-func FilterThenToSet[T any, E comparable](tS []T, filterFunc func(t T) bool, toSetFunc func(t T) E) ts.Set[E] {
-	s := ts.NewSet[E]()
+func FilterThenToSet[T any, E comparable](tS []T, filterFunc func(t T) bool, toSetFunc func(t T) E) Set[E] {
+	s := NewSet[E]()
 	for _, t := range tS {
 		if filterFunc(t) {
 			s.Add(toSetFunc(t))
@@ -115,7 +113,7 @@ func FilterThenToSet[T any, E comparable](tS []T, filterFunc func(t T) bool, toS
 //
 // groupByFunc: the groupBy function
 func FilterThenGroupBy[T any, K comparable, V any](ts []T, filterFunc func(t T) bool, groupByFunc func(t T) (K, V)) map[K][]V {
-	m := make(map[K][]V, 0)
+	m := make(map[K][]V)
 	for _, t := range ts {
 		if filterFunc(t) {
 			k, v := groupByFunc(t)

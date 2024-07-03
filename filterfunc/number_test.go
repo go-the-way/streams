@@ -9,20 +9,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package streams
+package filterfunc
 
-// Generate function
-//
-// T: element type
-//
-// genFunc: the generate function
-func Generate[T any](start, end int, genFunc func(index, step int) T) []T {
-	length := end - start + 1
-	ts := make([]T, length)
-	index := 0
-	for i := start; i <= end; i++ {
-		ts[index] = genFunc(index, i)
-		index++
+import (
+	"testing"
+)
+
+func Test(t *testing.T) {
+	for _, tc := range []struct {
+		name        string
+		val, expect any
+	}{
+		{"Eq", Eq(10)(10), true},
+		{"Gt", Gt(10)(10), false},
+		{"GtEq", GtEq(10)(10), true},
+		{"Lt", Lt(10)(10), false},
+		{"LtEq", LtEq(10)(10), true},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			if tc.val != tc.expect {
+				t.Error("test failed!")
+			}
+		})
 	}
-	return ts
 }

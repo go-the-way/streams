@@ -9,20 +9,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package streams
+package reducefunc
 
-// Generate function
-//
-// T: element type
-//
-// genFunc: the generate function
-func Generate[T any](start, end int, genFunc func(index, step int) T) []T {
-	length := end - start + 1
-	ts := make([]T, length)
-	index := 0
-	for i := start; i <= end; i++ {
-		ts[index] = genFunc(index, i)
-		index++
-	}
-	return ts
-}
+import "github.com/go-the-way/streams/constraint"
+
+type Nr = constraint.Number
+
+func Number[T Nr](num T, sum *T)              { *sum += num }
+func NumberFunc[T Nr]() func(num T, sum *T)   { return func(num T, sum *T) { Number(num, sum) } }
+func Slice[T Nr](ns []T, sum *[]T)            { *sum = append(*sum, ns...) }
+func SliceFunc[T Nr]() func(ns []T, sum *[]T) { return func(ns []T, sum *[]T) { Slice(ns, sum) } }

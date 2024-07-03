@@ -9,20 +9,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package streams
+package mapfunc
 
-// Generate function
-//
-// T: element type
-//
-// genFunc: the generate function
-func Generate[T any](start, end int, genFunc func(index, step int) T) []T {
-	length := end - start + 1
-	ts := make([]T, length)
-	index := 0
-	for i := start; i <= end; i++ {
-		ts[index] = genFunc(index, i)
-		index++
-	}
-	return ts
-}
+import "fmt"
+
+var (
+	// Int2BinaryString
+	// 10 -> 1010
+	Int2BinaryString = func(in int) string { return fmt.Sprintf("%b", in) }
+	// Int2OctalString
+	// 10 -> 12
+	Int2OctalString = func(in int) string { return fmt.Sprintf("%o", in) }
+	// Int2String
+	// 10 -> 10
+	Int2String = func(in int) string { return fmt.Sprintf("%d", in) }
+	// Int2HexString
+	// 15 -> f
+	Int2HexString = func(in int) string { return fmt.Sprintf("%x", in) }
+	// Int2Any
+	// return int to any
+	Int2Any = func(in int) any { return in }
+)

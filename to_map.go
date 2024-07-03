@@ -21,7 +21,7 @@ package streams
 //
 // toMapFunc: the to map function
 func ToMap[T any, K comparable, V any](ts []T, toMapFunc func(t T) (K, V)) map[K]V {
-	m := make(map[K]V, 0)
+	m := make(map[K]V)
 	for _, t := range ts {
 		k, v := toMapFunc(t)
 		m[k] = v
@@ -43,7 +43,7 @@ func ToMap[T any, K comparable, V any](ts []T, toMapFunc func(t T) (K, V)) map[K
 //
 // toMapFunc: the to map function
 func ToMapThenMap[T any, K, KK comparable, V, VV any](ts []T, toMapFunc func(t T) (K, V), mapFunc func(k K, v V) (KK, VV)) map[KK]VV {
-	m := make(map[KK]VV, 0)
+	m := make(map[KK]VV)
 	for _, t := range ts {
 		k, v := toMapFunc(t)
 		kk, vv := mapFunc(k, v)
@@ -68,8 +68,8 @@ func ToMapThenMap[T any, K, KK comparable, V, VV any](ts []T, toMapFunc func(t T
 //
 // toMapFunc2: the to map2 function
 func ToMap2[T any, K1, K2 comparable, V1, V2 any](ts []T, toMapFunc1 func(t T) (K1, V1), toMapFunc2 func(t T) (K2, V2)) (map[K1]V1, map[K2]V2) {
-	m1 := make(map[K1]V1, 0)
-	m2 := make(map[K2]V2, 0)
+	m1 := make(map[K1]V1)
+	m2 := make(map[K2]V2)
 	for _, t := range ts {
 		k1, v1 := toMapFunc1(t)
 		k2, v2 := toMapFunc2(t)
@@ -101,9 +101,9 @@ func ToMap2[T any, K1, K2 comparable, V1, V2 any](ts []T, toMapFunc1 func(t T) (
 //
 // toMapFunc3: the to map3 function
 func ToMap3[T any, K1, K2, K3 comparable, V1, V2, V3 any](ts []T, toMapFunc1 func(t T) (K1, V1), toMapFunc2 func(t T) (K2, V2), toMapFunc3 func(t T) (K3, V3)) (map[K1]V1, map[K2]V2, map[K3]V3) {
-	m1 := make(map[K1]V1, 0)
-	m2 := make(map[K2]V2, 0)
-	m3 := make(map[K3]V3, 0)
+	m1 := make(map[K1]V1)
+	m2 := make(map[K2]V2)
+	m3 := make(map[K3]V3)
 	for _, t := range ts {
 		k1, v1 := toMapFunc1(t)
 		k2, v2 := toMapFunc2(t)
@@ -127,7 +127,7 @@ func ToMap3[T any, K1, K2, K3 comparable, V1, V2, V3 any](ts []T, toMapFunc1 fun
 //
 // mapFunc: the map function
 func MapToMap[KI, KO comparable, VI, VO any](m map[KI]VI, toMapFunc func(ki KI, vi VI) (KO, VO)) map[KO]VO {
-	om := make(map[KO]VO, 0)
+	om := make(map[KO]VO)
 	for k, v := range m {
 		ko, vo := toMapFunc(k, v)
 		om[ko] = vo
@@ -149,7 +149,7 @@ func MapToMap[KI, KO comparable, VI, VO any](m map[KI]VI, toMapFunc func(ki KI, 
 //
 // filterFunc: the filter function
 func MapToMapThenFilter[KI, KO comparable, VI, VO any](m map[KI]VI, toMapFunc func(ki KI, vi VI) (KO, VO), filterFunc func(KO, VO) bool) map[KO]VO {
-	om := make(map[KO]VO, 0)
+	om := make(map[KO]VO)
 	for k, v := range m {
 		if ko, vo := toMapFunc(k, v); filterFunc(ko, vo) {
 			om[ko] = vo
@@ -174,7 +174,7 @@ func MapToMapThenFilter[KI, KO comparable, VI, VO any](m map[KI]VI, toMapFunc fu
 //
 // reduceFunc: the reduce function
 func MapToMapThenReduce[KI, KO comparable, VI, VO, R any](m map[KI]VI, toMapFunc func(ki KI, vi VI) (KO, VO), r R, reduceFunc func(k KO, v VO, sum *R)) R {
-	om := make(map[KO]VO, 0)
+	om := make(map[KO]VO)
 	for k, v := range m {
 		ko, vo := toMapFunc(k, v)
 		om[ko] = vo
